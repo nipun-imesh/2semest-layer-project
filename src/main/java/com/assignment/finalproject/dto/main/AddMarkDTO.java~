@@ -1,0 +1,6 @@
+package com.assignment.finalproject.dto.main;
+
+public class AddMarkDTO {
+    private String grade;
+    private String 
+}

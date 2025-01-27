@@ -1,0 +1,94 @@
+
+.bt-gradient {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, rgba(36, 67, 177, 0.71) 0%, rgba(255,255,255,0) 91%);
+}
+
+.button1 {
+    -fx-background-color: #ff4800;
+    -fx-text-fill: white ;
+    -fx-font-weight: bold;
+}
+.button1:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #ff4800;
+    -fx-font-weight: bold;
+    -fx-border-color: #ff4800;
+    -fx-border-radius: 3px;
+}
+.AncerPan{
+    -fx-border-radius: 3px;
+    -fx-padding: 15px;
+}
+
+.Backgrount1 {
+
+        -fx-background-color:
+                linear-gradient(
+                        to top right, /* 112deg converted to JavaFX equivalent */
+                        rgba(225, 233, 223, 1) 0%,
+                        rgba(94, 91, 91, 1) 32%,
+                        rgba(0, 0, 0, 1) 98%
+                );
+    }
+
+
+.sidebar {
+    -fx-background-color: #7f37b1; /* Purple background color */
+    -fx-pref-width: 200px;
+}
+
+.menu-item {
+
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+}
+
+.menu-item:focused {
+    -fx-background-color: #ff4800;
+    -fx-text-fill: #ffffff;
+}
+
+.logout-button {
+    -fx-background-color: #e0c2ff;
+    -fx-text-fill: #6c3bbd;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 10px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #cdb5e0;
+}
+
+.user-info {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+.pop-rectangle {
+    -fx-fill: #fbfafa;
+    -fx-arc-width: 15;
+    -fx-arc-height: 15;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0.5, 0, 5);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.textFealComBox {
+    -fx-background-color: #fff;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1px 0;
+}

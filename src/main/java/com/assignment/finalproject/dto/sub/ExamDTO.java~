@@ -1,0 +1,66 @@
+package com.assignment.finalproject.dto.sub;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+
+public class ExamDTO {
+    private String examId;
+
+    @Override
+    public String toString() {
+        return "ExamDTO{" +
+                "examId='" + examId + '\'' +
+                ", examName='" + examName + '\'' +
+                ", grade='" + grade + '\'' +
+                ", classId='" + classId + '\'' +
+                '}';
+    }
+
+    private String examName;
+    private String grade;
+    private String classId;
+
+
+    public ExamDTO(String classId, String grade) {
+
+    }
+
+    public ExamDTO(String examID, String examName, String grade) {
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getExamName() {
+        return examName;
+    }
+
+    public void setExamName(String examName) {
+        this.examName = examName;
+    }
+
+    public String getExamId() {
+        return examId;
+    }
+
+    public void setExamId(String examId) {
+        this.examId = examId;
+    }
+
+}

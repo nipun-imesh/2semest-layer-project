@@ -1,0 +1,78 @@
+package com.assignment.finalproject.model.mainModel;
+
+import com.assignment.finalproject.Cradutil.CrudUtil;
+import com.assignment.finalproject.dto.sub.GetParentIdDTO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class SendMailModel {
+
+    public ObservableList<GetParentIdDTO> getAllParentID()  {
+
+        ResultSet rst = null;
+        try {
+            rst = CrudUtil.execute("select parent_id from parent where status = 'Active'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        ObservableList<GetParentIdDTO> getParentIdDTOS = FXCollections.observableArrayList();
+        while (true){
+            try {
+                if (!rst.next()) break;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            GetParentIdDTO getParentIdDTO = null;
+            try {
+                getParentIdDTO = new GetParentIdDTO(
+                        rst.getString(1)
+                );
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            getParentIdDTOS.add(getParentIdDTO);
+        }
+        return getParentIdDTOS;
+    }
+
+    public String getParentName(String parentId)  {
+        ResultSet resultSet = null;
+        try {
+            resultSet = CrudUtil.execute("SELECT parent_name FROM parent WHERE parent_id = ?", parentId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            if (resultSet.next()) {
+                return resultSet.getString("parent_name");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public String getParentEmail(String parentId) {
+        ResultSet resultSet = null;
+        try {
+            resultSet = CrudUtil.execute("SELECT e_mail FROM parent WHERE parent_id = ?", parentId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            if(resultSet.next()){
+                return resultSet.getString("e_mail");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+}
