@@ -10,5 +10,5 @@ public interface SubjectDAO {
 
      ObservableList<SabjectDTO> get6TO9Subject() throws SQLException;
      ObservableList<SabjectDTO> get10TO11Subject() throws SQLException;
-     String getSubjectName(String subjectID) throws SQLException;
+     
 }
