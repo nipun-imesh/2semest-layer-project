@@ -1,13 +1,13 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.StudentSubjectDetaliDTO;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.sub.ExamNameDTO;
 import com.assignment.finalproject.dto.tm.GetResaltTM;
-import com.assignment.finalproject.model.mainModel.AddMarkModel;
-import com.assignment.finalproject.model.mainModel.StudentResaliViewModel;
-import com.assignment.finalproject.model.subModel.ClassModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +32,9 @@ import java.util.ResourceBundle;
 
 public class StudentResaltViewPageCointroler implements Initializable {
 
-    ClassModel classModel = new ClassModel();
-    AddMarkModel addMarkModel = new AddMarkModel();
-    StudentResaliViewModel studentResaliViewModel = new StudentResaliViewModel();
+    ClassImpl classModel = new ClassImpl();
+    AddMarkImpl addMarkModel = new AddMarkImpl();
+    QueryImpl query = new QueryImpl();
 
     @FXML
     private Button BUTBack;
@@ -114,7 +113,7 @@ public class StudentResaltViewPageCointroler implements Initializable {
         System.out.println("examName: " + examName);
 
         try {
-            ArrayList<GetResaltTM> getResaltTMS = studentResaliViewModel.searchResalt(new StudentSubjectDetaliDTO(studentId, classId, grade, examName));
+            ArrayList<GetResaltTM> getResaltTMS = query.search(new StudentSubjectDetaliDTO(studentId, classId, grade, examName));
             if (getResaltTMS.isEmpty()) {
                 System.out.println("No results found.");
             }
@@ -164,8 +163,11 @@ public class StudentResaltViewPageCointroler implements Initializable {
     }
 
     private void loadGrade() throws SQLException {
+//        ObservableList<String> observableList = FXCollections.observableArrayList();
+//        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
+
+        ArrayList<ClassDTO> classDTOS = classModel.getAll();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
         for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }

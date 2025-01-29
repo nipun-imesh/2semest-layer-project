@@ -1,4 +1,4 @@
-package com.assignment.finalproject.Cradutil;
+package com.assignment.finalproject.dao;
 
 import com.assignment.finalproject.db.DBConnection;
 

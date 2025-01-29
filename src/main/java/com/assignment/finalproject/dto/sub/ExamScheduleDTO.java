@@ -19,6 +19,7 @@ public class ExamScheduleDTO {
     private String examDate;
     private String subjectID;
 
+
     public ExamScheduleDTO(String subjectID, String examID) {
         this.examId = examID;
         this.subjectID = subjectID;

@@ -1,14 +1,15 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
 import com.assignment.finalproject.dto.tm.ManageExamTM;
-import com.assignment.finalproject.model.mainModel.ExamShedulModel;
-import com.assignment.finalproject.model.mainModel.ExamSubjectModel;
-import com.assignment.finalproject.model.mainModel.ManageExamModel;
-import com.assignment.finalproject.model.subModel.HallModel;
-import com.assignment.finalproject.model.subModel.SubjectModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageExamImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.HallImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,11 +31,12 @@ import java.util.ResourceBundle;
 
 public class ManageExamControler implements Initializable {
 
-    ManageExamModel manageExamModel = new ManageExamModel();
-    SubjectModel subjectModel = new SubjectModel();
-    HallModel hallModel = new HallModel();
-    ExamShedulModel examShedulModel = new ExamShedulModel();
-    ExamSubjectModel examSubjectModel = new ExamSubjectModel();
+    ManageExamImpl manageExamModel = new ManageExamImpl();
+    SubjectImpl subjectModel = new SubjectImpl();
+    HallImpl hallModel = new HallImpl();
+    QueryImpl query= new QueryImpl();
+    ExamShedulImpl examShedulModel = new ExamShedulImpl();
+    ExamSubjectImpl examSubjectModel = new ExamSubjectImpl();
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
 
 
@@ -141,7 +143,7 @@ public class ManageExamControler implements Initializable {
         String examShedulID = LBExamShedulID.getText();
 
         try {
-            boolean isDeleted = manageExamModel.deleteExam(new AddExamListDTO(examID, examShedulID));
+            boolean isDeleted = manageExamModel.delete(new AddExamListDTO(examID, examShedulID));
             if (!isDeleted) {
                 new Alert(Alert.AlertType.ERROR, "Failed to delete exam.").show();
                 return;
@@ -174,7 +176,7 @@ public class ManageExamControler implements Initializable {
         }
 
         try {
-            boolean isUpdated = manageExamModel.updateExamAndSchedule(
+            boolean isUpdated = manageExamModel.upDate(
                     new AddExamListDTO(examID, examName, grade, hallName, examTime, examDate, examShedulID, subjectID)
             );
 
@@ -200,7 +202,7 @@ public class ManageExamControler implements Initializable {
         String grade = String.valueOf(COMSelectClass.getValue());
 
         try {
-            ArrayList<ManageExamTM> selectExam = manageExamModel.getSelectExam(grade);
+            ArrayList<ManageExamTM> selectExam = query.getSelectExam(grade);
             TBLSetExam.setItems(FXCollections.observableArrayList(selectExam));
 
         } catch (SQLException e) {

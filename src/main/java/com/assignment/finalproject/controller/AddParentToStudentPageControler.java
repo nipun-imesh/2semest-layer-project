@@ -2,7 +2,7 @@ package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
-import com.assignment.finalproject.model.mainModel.AddParentCModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class AddParentToStudentPageControler implements Initializable {
 
-    AddParentCModel addParentCModel = new AddParentCModel();
+    AddParentImpl addParentCModel = new AddParentImpl();
 
     private StudentManagePageControler studentMC;
 
@@ -86,7 +85,7 @@ public class AddParentToStudentPageControler implements Initializable {
     private void loadAllParent() {
         ArrayList<AddParentDTO> addParentDTOS = null;
         try {
-            addParentDTOS = AddParentCModel.getAllParent();
+            addParentDTOS = addParentCModel.getAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -152,7 +151,7 @@ public class AddParentToStudentPageControler implements Initializable {
                     "Active"
             );
             try {
-                if (AddParentCModel.saveParent(addParentDTO)) {
+                if (addParentCModel.save(addParentDTO)) {
                     loadAllParent();
                     loadNextParentID();
                 }
@@ -181,7 +180,7 @@ public class AddParentToStudentPageControler implements Initializable {
     public void loadNextParentID() {
         String nextParantID = null;
         try {
-            nextParantID = addParentCModel.getParentID();
+            nextParantID = addParentCModel.getID();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

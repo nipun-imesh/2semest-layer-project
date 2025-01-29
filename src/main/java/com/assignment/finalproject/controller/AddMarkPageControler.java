@@ -1,13 +1,12 @@
 package com.assignment.finalproject.controller;
 
-import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.main.AddMarkDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.AddMarkCartTM;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
-import com.assignment.finalproject.model.mainModel.AddMarkModel;
-import com.assignment.finalproject.model.subModel.ClassModel;
-import com.assignment.finalproject.model.subModel.SubjectModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,9 +25,9 @@ import java.util.ResourceBundle;
 
 public class AddMarkPageControler implements Initializable {
 
-    ClassModel classModel = new ClassModel();
-    AddMarkModel addMarkModel = new AddMarkModel();
-    SubjectModel subjectModel = new SubjectModel();
+    ClassImpl classModel = new ClassImpl();
+    AddMarkImpl addMarkModel = new AddMarkImpl();
+    SubjectImpl subjectModel = new SubjectImpl();
     private final ObservableList<AddMarkCartTM> addMarkCartTMS = FXCollections.observableArrayList();
     private final ObservableList<GetStudentNameIdTM> getStudentNameIdTMS = FXCollections.observableArrayList();
 
@@ -331,7 +330,8 @@ public class AddMarkPageControler implements Initializable {
 
     private void loadGrade() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
+        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+
         for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }

@@ -3,8 +3,8 @@ package com.assignment.finalproject.controller;
 import com.assignment.finalproject.dto.main.StudentManageDTO;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.StudentTM;
-import com.assignment.finalproject.model.subModel.ClassModel;
-import com.assignment.finalproject.model.mainModel.StudentManageModel;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.StudentManageImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,8 +33,8 @@ import java.util.ResourceBundle;
 
 public class StudentManagePageControler implements Initializable {
 
-    private final ClassModel classModel = new ClassModel();
-    private final StudentManageModel studentManageModel = new StudentManageModel();
+    private final ClassImpl classModel = new ClassImpl();
+    private final StudentManageImpl studentManageModel = new StudentManageImpl();
 
 
     @FXML
@@ -170,7 +170,7 @@ public class StudentManagePageControler implements Initializable {
 
             boolean isDeleted = false;
             try {
-                isDeleted = studentManageModel.deleteStudent(studentID);
+                isDeleted = studentManageModel.delete(studentID);
                 reSet();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -257,7 +257,7 @@ public class StudentManagePageControler implements Initializable {
                         parentID,
                         "Active"
                 );
-                boolean isUpdate = studentManageModel.updateStudent(studentManageDTO);
+                boolean isUpdate = studentManageModel.upDate(studentManageDTO);
                 if (isUpdate) {
                     reSet();
                     new Alert(Alert.AlertType.INFORMATION, "Student update...!").show();
@@ -376,7 +376,7 @@ public class StudentManagePageControler implements Initializable {
         );
 
         // Attempt to save the student data
-        boolean isSaved = StudentManageModel.saveStudent(studentManageDTO);
+        boolean isSaved = studentManageModel.save(studentManageDTO);
         if (isSaved) {
             new Alert(Alert.AlertType.CONFIRMATION, "Student added successfully").show();
         } else {
@@ -409,7 +409,8 @@ public class StudentManagePageControler implements Initializable {
 
     private void loadClass() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
+        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+
         for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
@@ -417,7 +418,7 @@ public class StudentManagePageControler implements Initializable {
     }
 
     private void loadAllStudent() throws SQLException {
-        ArrayList<StudentManageDTO> studentManageDTOS = StudentManageModel.getAllstuden();
+        ArrayList<StudentManageDTO> studentManageDTOS = studentManageModel.getAll();
 
         ObservableList<StudentTM> studentTMS = FXCollections.observableArrayList();
         for (StudentManageDTO studentManageDTO : studentManageDTOS) {
@@ -437,7 +438,7 @@ public class StudentManagePageControler implements Initializable {
     }
 
     public void loadNextStudentID() throws SQLException {
-        String nextStudentId = studentManageModel.getStudentID();
+        String nextStudentId = studentManageModel.getID();
         LBStudentId.setText(nextStudentId);
     }
 
@@ -448,7 +449,4 @@ public class StudentManagePageControler implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }

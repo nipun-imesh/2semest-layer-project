@@ -1,7 +1,7 @@
 package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.dto.sub.GetParentIdDTO;
-import com.assignment.finalproject.model.mainModel.SendMailModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SendMailImpl;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SendMailControler implements Initializable {
-    SendMailModel sendMailModel = new SendMailModel();
+    SendMailImpl sendMailModel = new SendMailImpl();
 
     @FXML
     private Button BUtSend;
@@ -104,7 +104,7 @@ public class SendMailControler implements Initializable {
 
     private void loadParentID() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<GetParentIdDTO> getParentIdDTOS = sendMailModel.getAllParentID();
+        ObservableList<GetParentIdDTO> getParentIdDTOS =  sendMailModel.getAllParentID();
         for (GetParentIdDTO getParentIdDTO : getParentIdDTOS) {
             observableList.add(getParentIdDTO.getParentId());
         }

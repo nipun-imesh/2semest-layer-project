@@ -2,7 +2,7 @@ package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
-import com.assignment.finalproject.model.mainModel.AddParentCModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +20,9 @@ import java.util.ResourceBundle;
 
 public class AddParentPageControler implements Initializable {
     AddParentTM addParentTM = new AddParentTM();
-    AddParentCModel addParentCModel = new AddParentCModel();
+    AddParentImpl addParentCModel = new AddParentImpl();
+
+
 
     @FXML
     private Button BUtSave;
@@ -119,7 +121,7 @@ public class AddParentPageControler implements Initializable {
                     "Active"
             );
             try {
-                if (AddParentCModel.saveParent(addParentDTO)) {
+                if (addParentCModel.save(addParentDTO)) {
                     new Alert(Alert.AlertType.INFORMATION, "Parent saved...!").show();
                     loadAllParent();
                     loadNextParentID();
@@ -159,7 +161,7 @@ public class AddParentPageControler implements Initializable {
                 "Active"
         );
         try {
-            if (AddParentCModel.upDateParent(addParentDTO)) {
+            if (addParentCModel.upDate(addParentDTO)) {
                 new Alert(Alert.AlertType.INFORMATION, "Parent updated...!").show();
                 loadAllParent();
                 loadNextParentID();
@@ -174,7 +176,7 @@ public class AddParentPageControler implements Initializable {
     void BUTDeletOnAction(ActionEvent event) {
         String parentID = LBParentId.getText();
         try {
-            if (AddParentCModel.deleteParent(parentID)) {
+            if (addParentCModel.delete(parentID)) {
                 new Alert(Alert.AlertType.INFORMATION, "Parent deleted...!").show();
                 loadAllParent();
                 loadNextParentID();
@@ -201,12 +203,12 @@ public class AddParentPageControler implements Initializable {
     }
 
     public void loadNextParentID() throws SQLException {
-        String nextParantID = addParentCModel.getParentID();
+        String nextParantID = addParentCModel.getID();
         LBParentId.setText(nextParantID);
     }
 
     private void loadAllParent() throws SQLException {
-        ArrayList<AddParentDTO> addParentDTOS = AddParentCModel.getAllParent();
+        ArrayList<AddParentDTO> addParentDTOS = addParentCModel.getAll();
 
         ObservableList<AddParentTM> addParentTMS = FXCollections.observableArrayList();
         for (AddParentDTO addParentDTO : addParentDTOS) {

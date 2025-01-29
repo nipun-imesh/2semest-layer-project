@@ -1,11 +1,12 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.tm.ManageExamMarkTM;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
-import com.assignment.finalproject.model.mainModel.ManageMarkModel;
-import com.assignment.finalproject.model.subModel.ClassModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageMarkImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,14 +20,14 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ManageMarkControler implements Initializable {
 
-    ClassModel classModel = new ClassModel();
-    ManageMarkModel manageMarkModel = new ManageMarkModel();
+    ClassImpl classModel = new ClassImpl();
+    ManageMarkImpl manageMarkModel = new ManageMarkImpl();
+    QueryImpl query = new QueryImpl();
 
     @FXML
     private AnchorPane ANKMarkManage;
@@ -121,7 +122,7 @@ public class ManageMarkControler implements Initializable {
         ManageExamMarkTM manageExamMarkTM = TBLSelectMark.getSelectionModel().getSelectedItem();
         if (manageExamMarkTM != null) {
             try {
-                boolean isDeleted = manageMarkModel.deleteMark(new ExamSubjectIdDTO(manageExamMarkTM.getExamID(), manageExamMarkTM.getSubjectID()));
+                boolean isDeleted = manageMarkModel.delete(new ExamSubjectIdDTO(manageExamMarkTM.getExamID(), manageExamMarkTM.getSubjectID()));
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION, "Mark deleted successfully").show();
             }else {
@@ -173,7 +174,7 @@ public class ManageMarkControler implements Initializable {
 
 
         try {
-            boolean isUpdated = manageMarkModel.updateMark(new ExamSubjectIdDTO(mark, studentId, subjectId, examId));
+            boolean isUpdated = manageMarkModel.upDate(new ExamSubjectIdDTO(mark, studentId, subjectId, examId));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Mark updated successfully").show();
             } else {
@@ -232,9 +233,11 @@ public class ManageMarkControler implements Initializable {
 
         comboBox.setItems(FXCollections.observableArrayList(ClassLevel.getAllLabels()));
     }
+
     private void loadGrade() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
+        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+
         for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
@@ -252,7 +255,7 @@ public class ManageMarkControler implements Initializable {
 
         ArrayList<ManageExamMarkTM> manageExamMarkTMS = null;
         try {
-            manageExamMarkTMS = manageMarkModel.getStudentMarkDetail(studentId);
+            manageExamMarkTMS = query.getStudentMarkDetail(studentId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

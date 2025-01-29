@@ -18,4 +18,6 @@ public class StudentManageDTO {
     private String S_class;
     private String parentId;
     private String status = "Active";
+
+
 }

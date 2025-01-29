@@ -1,16 +1,11 @@
 package com.assignment.finalproject.controller;
 
-import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
-import com.assignment.finalproject.dto.tm.StudentTM;
-import com.assignment.finalproject.model.mainModel.AddExamListModel;
-import com.assignment.finalproject.model.mainModel.ExamShedulModel;
-import com.assignment.finalproject.model.mainModel.ExamSubjectModel;
-import com.assignment.finalproject.model.subModel.HallModel;
-import com.assignment.finalproject.model.subModel.SubjectModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListModel;
+import com.assignment.finalproject.dao.custom.Impl.subModel.HallImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
 import com.assignment.finalproject.util.ClassLevel;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,8 +27,8 @@ import java.util.ResourceBundle;
 public class AddExamListPageControler implements Initializable {
 
     AddExamListModel addExamListModel = new AddExamListModel();
-    HallModel hallModel = new HallModel();
-    SubjectModel subjectModel = new SubjectModel();
+    HallImpl hallModel = new HallImpl();
+    SubjectImpl subjectModel = new SubjectImpl();
 
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
 
@@ -338,7 +333,7 @@ public class AddExamListPageControler implements Initializable {
 
     private void loadExamHall() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<HallDTO> hallDTOS = hallModel.getAllHall();
+        ObservableList<HallDTO> hallDTOS =  hallModel.getAllHall();
         for (HallDTO hallDTO : hallDTOS) {
             observableList.add(hallDTO.getHallId());
         }

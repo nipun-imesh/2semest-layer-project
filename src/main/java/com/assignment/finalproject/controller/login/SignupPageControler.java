@@ -1,7 +1,7 @@
 package com.assignment.finalproject.controller.login;
 
 import com.assignment.finalproject.dto.main.SigninDTO;
-import com.assignment.finalproject.model.mainModel.SigninModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class SignupPageControler {
 
-    SigninModel sininModel = new SigninModel();
+    SigninImpl sininModel = new SigninImpl();
 
     @FXML
     private AnchorPane ANKSignin;
