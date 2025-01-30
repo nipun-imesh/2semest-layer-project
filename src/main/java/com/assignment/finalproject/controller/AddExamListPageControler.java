@@ -2,7 +2,7 @@ package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListModel;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.HallImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
 import com.assignment.finalproject.util.ClassLevel;
@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 
 public class AddExamListPageControler implements Initializable {
 
-    AddExamListModel addExamListModel = new AddExamListModel();
+    AddExamListImpl addExamListModel = new AddExamListImpl();
     HallImpl hallModel = new HallImpl();
     SubjectImpl subjectModel = new SubjectImpl();
 
