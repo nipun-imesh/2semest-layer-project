@@ -1,13 +1,13 @@
 package com.assignment.finalproject.controller;
 
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.StudentSubjectDetaliDTO;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.sub.ExamNameDTO;
 import com.assignment.finalproject.dto.tm.GetResaltTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,9 +32,9 @@ import java.util.ResourceBundle;
 
 public class StudentResaltViewPageCointroler implements Initializable {
 
-    ClassImpl classModel = new ClassImpl();
-    AddMarkImpl addMarkModel = new AddMarkImpl();
-    QueryImpl query = new QueryImpl();
+    ClassDAOImpl classModel = new ClassDAOImpl();
+    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
+    QueryDAOImpl query = new QueryDAOImpl();
 
     @FXML
     private Button BUTBack;

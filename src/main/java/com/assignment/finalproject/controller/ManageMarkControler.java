@@ -1,12 +1,12 @@
 package com.assignment.finalproject.controller;
 
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.tm.ManageExamMarkTM;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageMarkImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageMarkDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,9 +25,9 @@ import java.util.ResourceBundle;
 
 public class ManageMarkControler implements Initializable {
 
-    ClassImpl classModel = new ClassImpl();
-    ManageMarkImpl manageMarkModel = new ManageMarkImpl();
-    QueryImpl query = new QueryImpl();
+    ClassDAOImpl classModel = new ClassDAOImpl();
+    ManageMarkDAOImpl manageMarkModel = new ManageMarkDAOImpl();
+    QueryDAOImpl query = new QueryDAOImpl();
 
     @FXML
     private AnchorPane ANKMarkManage;

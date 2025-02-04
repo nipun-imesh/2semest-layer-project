@@ -2,7 +2,7 @@ package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class AddParentToStudentPageControler implements Initializable {
 
-    AddParentImpl addParentCModel = new AddParentImpl();
+    AddParentDAOImpl addParentCModel = new AddParentDAOImpl();
 
     private StudentManagePageControler studentMC;
 

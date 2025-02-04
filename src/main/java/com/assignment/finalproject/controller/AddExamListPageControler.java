@@ -1,10 +1,12 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.AddExamListBO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.HallImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.HallDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectDAOImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,11 +28,13 @@ import java.util.ResourceBundle;
 
 public class AddExamListPageControler implements Initializable {
 
-    AddExamListImpl addExamListModel = new AddExamListImpl();
-    HallImpl hallModel = new HallImpl();
-    SubjectImpl subjectModel = new SubjectImpl();
+    AddExamListDAOImpl addExamListModel = new AddExamListDAOImpl();
+    HallDAOImpl hallModel = new HallDAOImpl();
+    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
 
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
+
+    AddExamListBO addExamListBO = (AddExamListBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDEXAMLIST);
 
     @FXML
     private AnchorPane ANKAddExampan;
@@ -118,14 +122,18 @@ public class AddExamListPageControler implements Initializable {
         COMSubjectID.setPromptText("Subject ID");
 
         setCellValues();
-        getExamShedulID();
-        getExamID();
+
         try {
+            getExamID();
+            getExamShedulID();
             loadExamHall();
             loadGrade((ComboBox<String>) COBGrade);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+
         COMSubjectID.setValue("");
         COBSelectHall.setValue("");
         COBGrade.setValue("");
@@ -147,7 +155,7 @@ public class AddExamListPageControler implements Initializable {
     }
 
     @FXML
-    void resetOnAction(ActionEvent event) {
+    void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         resetAddset();
         getExamShedulID();
@@ -155,7 +163,7 @@ public class AddExamListPageControler implements Initializable {
     }
 
     @FXML
-    void AddOnAction(ActionEvent event) {
+    void AddOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         String examshedulID = LBExamShedulID.getText();
         String examID = LBExamID.getText();
@@ -276,7 +284,7 @@ public class AddExamListPageControler implements Initializable {
             System.out.println(examSubjectIdDTOS);
         }
 
-        boolean isSaved = addExamListModel.saveExamAndSchedule(examDTOS, examScheduleDTOS, examSubjectIdDTOS);
+        boolean isSaved = addExamListBO.saveExamList(examDTOS, examScheduleDTOS, examSubjectIdDTOS);
 
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Saved...!").show();
@@ -321,13 +329,13 @@ public class AddExamListPageControler implements Initializable {
         }
     }
 
-    public void getExamShedulID() {
-        String nextExamShedulID = addExamListModel.getExamShedulID();
+    public void getExamShedulID() throws SQLException, ClassNotFoundException {
+        String nextExamShedulID = addExamListBO.getExamShedulID();
         LBExamShedulID.setText(nextExamShedulID);
     }
 
-    public void getExamID() {
-        String nextExamID = addExamListModel.getExamID();
+    public void getExamID() throws SQLException, ClassNotFoundException {
+        String nextExamID = addExamListBO.getExamID();
         LBExamID.setText(nextExamID);
     }
 

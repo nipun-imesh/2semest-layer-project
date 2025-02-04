@@ -20,35 +20,35 @@ public class DAOFactory {
    public SuperDAO getDAO(DAOTypes types) {
        switch (types) {
            case ADDEXAMLIST:
-               return new AddExamListImpl();
+               return new AddExamListDAOImpl();
            case ADDMARK:
-               return new AddMarkImpl();
+               return new AddMarkDAOImpl();
            case ADDPARENT:
-               return new AddParentImpl();
+               return new AddParentDAOImpl();
            case EXAMSCHEDULE:
-               return new ExamShedulImpl();
+               return new ExamShedulDAOImpl();
            case EXAMSUBJECT:
-               return new ExamSubjectImpl();
+               return new ExamSubjectDAOImpl();
            case LOGIN:
-               return new LoginImpl();
+               return new LoginDAOImpl();
            case MANAGEMARK:
-               return new ManageMarkImpl();
+               return new ManageMarkDAOImpl();
            case MANAGEEXAM:
-               return new ManageExamImpl();
+               return new ManageExamDAOImpl();
            case QUERY:
-               return new QueryImpl();
+               return new QueryDAOImpl();
            case SENDMAIL:
-               return new SendMailImpl();
+               return new SendMailDAOImpl();
            case SIGNIN:
-               return new SigninImpl();
+               return new SigninDAOImpl();
            case STUDENTMANAGE:
-               return new StudentManageImpl();
+               return new StudentManageDAOImpl();
            case CLASS:
-               return new ClassImpl();
+               return new ClassDAOImpl();
            case HALL:
-               return new HallImpl();
+               return new HallDAOImpl();
            case SUBJECT:
-               return new SubjectImpl();
+               return new SubjectDAOImpl();
            default:
                return null;
        }

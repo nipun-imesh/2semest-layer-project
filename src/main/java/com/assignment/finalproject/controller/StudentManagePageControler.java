@@ -3,8 +3,8 @@ package com.assignment.finalproject.controller;
 import com.assignment.finalproject.dto.main.StudentManageDTO;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.StudentTM;
-import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.StudentManageImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.StudentManageDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,8 +33,8 @@ import java.util.ResourceBundle;
 
 public class StudentManagePageControler implements Initializable {
 
-    private final ClassImpl classModel = new ClassImpl();
-    private final StudentManageImpl studentManageModel = new StudentManageImpl();
+    private final ClassDAOImpl classModel = new ClassDAOImpl();
+    private final StudentManageDAOImpl studentManageModel = new StudentManageDAOImpl();
 
 
     @FXML

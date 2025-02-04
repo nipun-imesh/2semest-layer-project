@@ -1,7 +1,7 @@
 package com.assignment.finalproject.controller.login;
 
 import com.assignment.finalproject.dto.main.SigninDTO;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninDAOImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 public class SignupPageControler {
 
-    SigninImpl sininModel = new SigninImpl();
+    SigninDAOImpl sininModel = new SigninDAOImpl();
 
     @FXML
     private AnchorPane ANKSignin;
@@ -78,7 +78,7 @@ public class SignupPageControler {
     }
 
     public void loadNextCustomerId() throws SQLException {
-       String nextCustomerId = sininModel.getUserId();
+       String nextCustomerId = sininModel.getID();
        LBUserid.setText(nextCustomerId);
     }
 }

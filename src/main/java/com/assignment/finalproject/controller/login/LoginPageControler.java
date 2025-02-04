@@ -1,7 +1,7 @@
 package com.assignment.finalproject.controller.login;
 
 import com.assignment.finalproject.dto.main.LoginDTO;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.LoginImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.LoginDAOImpl;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +52,7 @@ public class LoginPageControler {
     void logInAction(ActionEvent event) {
 
             LoginDTO loginDto = new LoginDTO(TXTUsername.getText(), TXTPAssword.getText());
-            LoginImpl loginModel = new LoginImpl();
+            LoginDAOImpl loginModel = new LoginDAOImpl();
 
             try {
                 if (TXTUsername.getText().isEmpty() || TXTPAssword.getText().isEmpty()) {

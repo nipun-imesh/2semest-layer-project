@@ -1,15 +1,15 @@
 package com.assignment.finalproject.controller;
 
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
 import com.assignment.finalproject.dto.tm.ManageExamTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulImpl;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectImpl;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageExamImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.HallImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageExamDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.HallDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectDAOImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,12 +31,12 @@ import java.util.ResourceBundle;
 
 public class ManageExamControler implements Initializable {
 
-    ManageExamImpl manageExamModel = new ManageExamImpl();
-    SubjectImpl subjectModel = new SubjectImpl();
-    HallImpl hallModel = new HallImpl();
-    QueryImpl query= new QueryImpl();
-    ExamShedulImpl examShedulModel = new ExamShedulImpl();
-    ExamSubjectImpl examSubjectModel = new ExamSubjectImpl();
+    ManageExamDAOImpl manageExamModel = new ManageExamDAOImpl();
+    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
+    HallDAOImpl hallModel = new HallDAOImpl();
+    QueryDAOImpl query= new QueryDAOImpl();
+    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
+    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
 
 

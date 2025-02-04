@@ -4,9 +4,9 @@ import com.assignment.finalproject.dto.main.AddMarkDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.AddMarkCartTM;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.ClassImpl;
-import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectImpl;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
+import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectDAOImpl;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,9 +25,9 @@ import java.util.ResourceBundle;
 
 public class AddMarkPageControler implements Initializable {
 
-    ClassImpl classModel = new ClassImpl();
-    AddMarkImpl addMarkModel = new AddMarkImpl();
-    SubjectImpl subjectModel = new SubjectImpl();
+    ClassDAOImpl classModel = new ClassDAOImpl();
+    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
+    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
     private final ObservableList<AddMarkCartTM> addMarkCartTMS = FXCollections.observableArrayList();
     private final ObservableList<GetStudentNameIdTM> getStudentNameIdTMS = FXCollections.observableArrayList();
 

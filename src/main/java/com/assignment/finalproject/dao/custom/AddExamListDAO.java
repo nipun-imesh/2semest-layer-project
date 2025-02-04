@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface AddExamListDAO extends CrudDAO<ExamDTO> {
-     String getExamShedulID();
-     String getExamID();
      boolean save(
             ArrayList<ExamDTO> examDTOList,
             ArrayList<ExamScheduleDTO> examScheduleDTOList,

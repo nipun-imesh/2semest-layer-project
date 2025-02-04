@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class QueryImpl implements QueryDAO {
+public class QueryDAOImpl implements QueryDAO {
 
     @Override
     public ArrayList<ManageExamTM> getSelectExam(String grade) throws SQLException {
@@ -84,7 +84,11 @@ public class QueryImpl implements QueryDAO {
     public ArrayList<GetResaltTM> search(StudentSubjectDetaliDTO studentSubjectDetaliDTO) throws SQLException {
 
         ResultSet sql = CrudUtil.execute(
-                "SELECT s_name ,mark FROM student s INNER JOIN marks m ON s.stu_id = m.stu_id INNER JOIN subject subj ON m.sub_id = subj.sub_id INNER JOIN exam e ON m.ex_id = e.ex_id WHERE  s.class = ? AND  e.e_name = ? AND s.s_grade = ? AND s.stu_id = ?",
+                "SELECT s_name ,mark FROM student" +
+                        " s INNER JOIN marks m ON s.stu_id = m.stu_id " +
+                        "INNER JOIN subject subj ON m.sub_id = subj.sub_id" +
+                        " INNER JOIN exam e ON m.ex_id = e.ex_id WHERE " +
+                        " s.class = ? AND  e.e_name = ? AND s.s_grade = ? AND s.stu_id = ?",
 
                 studentSubjectDetaliDTO.getClassId(),
                 studentSubjectDetaliDTO.getExamname(),
