@@ -93,7 +93,6 @@ public class StudentResaltViewPageCointroler implements Initializable {
 
         COLSubjectMaek.setCellValueFactory(new PropertyValueFactory<>("mark"));
         COLSubjectName.setCellValueFactory(new PropertyValueFactory<>("subjectName"));
-
     }
 
     @FXML
