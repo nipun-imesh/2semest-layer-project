@@ -10,6 +10,7 @@ import com.assignment.finalproject.dto.sub.ExamNameDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.sub.PlaysStudentAllMarkDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
+import com.assignment.finalproject.entity.main.AddMark;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,7 +47,12 @@ public class AddMarkBOImpl implements AddMarkBO {
 
     @Override
     public ArrayList<AddMarkDTO> getAll() throws SQLException {
-        return null;
+        ArrayList<AddMark> addMarks = addMarkDAO.getAll();
+        ArrayList<AddMarkDTO> addMarkDTOS = new ArrayList<>();
+        for (AddMark addMark : addMarks) {
+            addMarkDTOS.add(new AddMarkDTO(addMark.getGrade()));
+        }
+        return addMarkDTOS;
     }
 
     @Override

@@ -13,6 +13,6 @@ public interface HallBO extends SuperBO {
      ArrayList<HallDTO> getAll() throws SQLException;
      ArrayList<HallDTO> search();
      String getID() throws SQLException;
-     boolean upDate(HallDTO dto) throws SQLException;
+     boolean upDate(HallDTO dto) throws SQLException, ClassNotFoundException;
      boolean delete(String id) throws SQLException;
 }

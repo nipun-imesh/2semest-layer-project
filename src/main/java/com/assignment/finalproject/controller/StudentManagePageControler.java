@@ -1,10 +1,15 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.ClassBO;
+import com.assignment.finalproject.bo.custom.StudendManageBO;
 import com.assignment.finalproject.dto.main.StudentManageDTO;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.StudentTM;
 import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.StudentManageDAOImpl;
+import com.assignment.finalproject.entity.main.StudentManage;
+import com.assignment.finalproject.entity.sub.Classes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,10 +37,6 @@ import java.util.ResourceBundle;
 
 
 public class StudentManagePageControler implements Initializable {
-
-    private final ClassDAOImpl classModel = new ClassDAOImpl();
-    private final StudentManageDAOImpl studentManageModel = new StudentManageDAOImpl();
-
 
     @FXML
     private AnchorPane ANKaddStudentpain;
@@ -106,6 +107,11 @@ public class StudentManagePageControler implements Initializable {
     @FXML
     private Label TXTStuParentName;
 
+     ClassDAOImpl classModel = new ClassDAOImpl();
+     StudentManageDAOImpl studentManageModel = new StudentManageDAOImpl();
+
+     ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+     StudendManageBO studendManageBO = (StudendManageBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENTMANAGE);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -170,7 +176,7 @@ public class StudentManagePageControler implements Initializable {
 
             boolean isDeleted = false;
             try {
-                isDeleted = studentManageModel.delete(studentID);
+                isDeleted = studendManageBO.delete(studentID);
                 reSet();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -257,7 +263,7 @@ public class StudentManagePageControler implements Initializable {
                         parentID,
                         "Active"
                 );
-                boolean isUpdate = studentManageModel.upDate(studentManageDTO);
+                boolean isUpdate = studendManageBO.upDate(studentManageDTO);
                 if (isUpdate) {
                     reSet();
                     new Alert(Alert.AlertType.INFORMATION, "Student update...!").show();
@@ -376,7 +382,7 @@ public class StudentManagePageControler implements Initializable {
         );
 
         // Attempt to save the student data
-        boolean isSaved = studentManageModel.save(studentManageDTO);
+        boolean isSaved = studendManageBO.save(studentManageDTO);
         if (isSaved) {
             new Alert(Alert.AlertType.CONFIRMATION, "Student added successfully").show();
         } else {
@@ -409,19 +415,19 @@ public class StudentManagePageControler implements Initializable {
 
     private void loadClass() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+        ArrayList<Classes> classDTOS =  classModel.getAll();
 
-        for (ClassDTO classDTO : classDTOS) {
+        for (Classes classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
         COMClass.setItems(observableList);
     }
 
     private void loadAllStudent() throws SQLException {
-        ArrayList<StudentManageDTO> studentManageDTOS = studentManageModel.getAll();
+        ArrayList<StudentManage> studentManageDTOS = studentManageModel.getAll();
 
         ObservableList<StudentTM> studentTMS = FXCollections.observableArrayList();
-        for (StudentManageDTO studentManageDTO : studentManageDTOS) {
+        for (StudentManage studentManageDTO : studentManageDTOS) {
             StudentTM studentTM = new StudentTM(
                     studentManageDTO.getStudentId(),
                     studentManageDTO.getStudentName(),

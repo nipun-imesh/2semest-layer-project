@@ -18,7 +18,7 @@ public class ClassDTO {
         this.grade = Integer.parseInt(grade);
     }
 
-    public ClassDTO(String string) {
-        this.classId = string;
+    public ClassDTO(String classId) {
+        this.classId = classId;
     }
 }

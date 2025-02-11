@@ -10,8 +10,8 @@ public interface ClassBO extends SuperBO {
      boolean save(ClassDTO dto) throws SQLException;
      ArrayList<ClassDTO> getAll() throws SQLException;
      ArrayList<ClassDTO> search();
-     String getID() throws SQLException;
-     boolean upDate(ClassDTO dto) throws SQLException;
+     String getID() throws SQLException, ClassNotFoundException;
+     boolean upDate(ClassDTO dto) throws SQLException, ClassNotFoundException;
      boolean delete(String id) throws SQLException;
      ClassDTO findByclass(String selectedClassId);
 }

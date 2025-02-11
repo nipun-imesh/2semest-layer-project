@@ -7,12 +7,13 @@ import com.assignment.finalproject.dto.sub.ExamNameDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.sub.PlaysStudentAllMarkDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
+import com.assignment.finalproject.entity.main.AddMark;
 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface AddMarkDAO extends CrudDAO<AddMarkDTO> {
+public interface AddMarkDAO extends CrudDAO<AddMark> {
 
     ArrayList<GetStudentNameIdTM> getStudentNameId(AddMarkDTO markDTO) throws SQLException;
     String fineExamId(String examName) throws SQLException;

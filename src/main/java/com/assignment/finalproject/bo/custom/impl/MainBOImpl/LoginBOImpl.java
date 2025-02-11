@@ -39,7 +39,7 @@ public class LoginBOImpl implements LoginBO {
     }
 
     @Override
-    public boolean upDate(LoginDTO dto) throws SQLException {
+    public boolean upDate(LoginDTO dto) throws SQLException, ClassNotFoundException {
         return loginDAO.upDate(dto);
     }
 }

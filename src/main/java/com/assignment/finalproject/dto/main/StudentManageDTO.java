@@ -20,4 +20,13 @@ public class StudentManageDTO {
     private String status = "Active";
 
 
+    public StudentManageDTO(String studentId, String studentName, int age, String dateofBarth, String grade, String sClass, String parentId) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.age = age;
+        this.dateofBarth = dateofBarth;
+        this.grade = grade;
+        S_class = sClass;
+        this.parentId = parentId;
+    }
 }

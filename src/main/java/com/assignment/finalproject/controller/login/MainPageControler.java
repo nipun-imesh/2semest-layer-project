@@ -153,7 +153,8 @@ public class MainPageControler implements Initializable {
             fadeIn.play(); // Start the fade-in effect
 
         } catch (IOException ex) {
-            new Alert(Alert.AlertType.ERROR, "Error loading the page: " + path).show();
+//            new Alert(Alert.AlertType.ERROR, "Error loading the page: " + path).show();
+            ex.printStackTrace();
         }
     }
 }

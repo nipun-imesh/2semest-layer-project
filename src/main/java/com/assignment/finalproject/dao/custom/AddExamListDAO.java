@@ -4,13 +4,16 @@ import com.assignment.finalproject.dao.CrudDAO;
 import com.assignment.finalproject.dto.sub.ExamDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
+import com.assignment.finalproject.entity.sub.Exam;
+import com.assignment.finalproject.entity.sub.ExamSchedule;
+import com.assignment.finalproject.entity.sub.ExamSubject;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface AddExamListDAO extends CrudDAO<ExamDTO> {
+public interface AddExamListDAO extends CrudDAO<Exam> {
      boolean save(
-            ArrayList<ExamDTO> examDTOList,
-            ArrayList<ExamScheduleDTO> examScheduleDTOList,
-            ArrayList<ExamSubjectIdDTO> examSubjectIdDTOList) throws SQLException;
+            ArrayList<Exam> examDTOList,
+            ArrayList<ExamSchedule> examScheduleDTOList,
+            ArrayList<ExamSubject> examSubjectIdDTOList) throws SQLException;
 }

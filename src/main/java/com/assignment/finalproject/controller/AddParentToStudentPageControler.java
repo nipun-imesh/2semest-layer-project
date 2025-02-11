@@ -3,6 +3,7 @@ package com.assignment.finalproject.controller;
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentDAOImpl;
+import com.assignment.finalproject.entity.main.AddParent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -83,7 +84,7 @@ public class AddParentToStudentPageControler implements Initializable {
     }
 
     private void loadAllParent() {
-        ArrayList<AddParentDTO> addParentDTOS = null;
+        ArrayList<AddParent> addParentDTOS = null;
         try {
             addParentDTOS = addParentCModel.getAll();
         } catch (SQLException e) {
@@ -91,7 +92,7 @@ public class AddParentToStudentPageControler implements Initializable {
         }
 
         ObservableList<AddParentTM> addParentTMS = FXCollections.observableArrayList();
-        for (AddParentDTO addParentDTO : addParentDTOS) {
+        for (AddParent addParentDTO : addParentDTOS) {
             AddParentTM addParentTM = new AddParentTM(
                     addParentDTO.getParentId(),
                     addParentDTO.getParentName(),
@@ -144,7 +145,7 @@ public class AddParentToStudentPageControler implements Initializable {
             String parentName = TXTParentName.getText();
             String parentMail = TXTParentMail.getText();
 
-            AddParentDTO addParentDTO = new AddParentDTO(
+            AddParent addParentDTO = new AddParent(
                     parentID,
                     parentName,
                     parentMail,

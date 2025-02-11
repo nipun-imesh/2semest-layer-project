@@ -3,16 +3,17 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 import com.assignment.finalproject.bo.custom.AddExamListBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.sub.ExamDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
+import com.assignment.finalproject.entity.sub.Exam;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class AddExamListBOImpl implements AddExamListBO {
 
@@ -78,23 +79,23 @@ public class AddExamListBOImpl implements AddExamListBO {
     }
 
     @Override
-    public ArrayList<ExamDTO> getAllExamList() throws SQLException, ClassNotFoundException {
-        return addExamListDAO.getAll();
+    public ArrayList<Exam> getAllExamList() throws SQLException, ClassNotFoundException {
+        return null;
     }
 
     @Override
     public ArrayList<ExamDTO> searcheExamLis() throws SQLException, ClassNotFoundException {
-        return addExamListDAO.search();
+        return null;
     }
 
     @Override
     public String getExamID() throws SQLException, ClassNotFoundException {
-         return addExamListDAO.getExamID();
+         return addExamListDAO.getID();
     }
 
     @Override
     public boolean upDate(ExamDTO dto) throws SQLException, ClassNotFoundException {
-        return addExamListDAO.upDate(dto);
+        return false;
     }
 
     @Override

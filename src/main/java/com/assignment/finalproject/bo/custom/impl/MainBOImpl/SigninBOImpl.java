@@ -1,12 +1,11 @@
 package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
 import com.assignment.finalproject.bo.custom.SignInBO;
-import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninDAOImpl;
 import com.assignment.finalproject.dto.main.SigninDTO;
+import com.assignment.finalproject.entity.main.Signin;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -20,7 +19,8 @@ public class SigninBOImpl implements SignInBO {
 
     @Override
     public boolean upDate(SigninDTO dto) throws SQLException, ClassNotFoundException {
-        return signinDAO.upDate(dto);
+
+        return false;
     }
 
     @Override
@@ -30,16 +30,17 @@ public class SigninBOImpl implements SignInBO {
 
     @Override
     public boolean save(SigninDTO signinDto) throws SQLException {
-        return signinDAO.save(signinDto);
+
+        return signinDAO.save(new Signin(signinDto.getUserid(),signinDto.getUsername(),signinDto.getPassword()));
     }
 
     @Override
-    public ArrayList<SigninDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Signin> getAll() throws SQLException, ClassNotFoundException {
         return signinDAO.getAll();
     }
 
     @Override
-    public ArrayList<SigninDTO> search() throws SQLException, ClassNotFoundException {
+    public ArrayList<Signin> search() throws SQLException, ClassNotFoundException {
         return signinDAO.search();
     }
 }

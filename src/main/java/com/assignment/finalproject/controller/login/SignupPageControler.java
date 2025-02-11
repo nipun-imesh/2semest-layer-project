@@ -1,7 +1,10 @@
 package com.assignment.finalproject.controller.login;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.SignInBO;
 import com.assignment.finalproject.dto.main.SigninDTO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninDAOImpl;
+import com.assignment.finalproject.entity.main.Signin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +18,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class SignupPageControler {
-
-    SigninDAOImpl sininModel = new SigninDAOImpl();
 
     @FXML
     private AnchorPane ANKSignin;
@@ -38,6 +39,11 @@ public class SignupPageControler {
 
     @FXML
     private TextField TXTUsername;
+
+//    SigninDAOImpl sininModel = new SigninDAOImpl();
+
+    SignInBO signinbo = (SignInBO) BOFactory.getInstance().getBO(BOFactory.BOType.SIGNIN);
+
     public void initialize() throws SQLException {
         TXTUsername.setOnAction(event -> TXTPassword.requestFocus());
         TXTPassword.setOnAction(event -> TXTRePassword.requestFocus());
@@ -59,7 +65,7 @@ public class SignupPageControler {
                 new Alert(Alert.AlertType.ERROR, "Password does not match").show();
             }else{
                 SigninDTO signinDto = new SigninDTO(userid, username, password);
-                boolean isSaved = sininModel.save(signinDto);
+                boolean isSaved = signinbo.save(new SigninDTO(signinDto.getUserid(),signinDto.getUsername(),signinDto.getPassword()));
                 if (isSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully").show();
                 }
@@ -78,7 +84,7 @@ public class SignupPageControler {
     }
 
     public void loadNextCustomerId() throws SQLException {
-       String nextCustomerId = sininModel.getID();
+       String nextCustomerId = signinbo.getID();
        LBUserid.setText(nextCustomerId);
     }
 }

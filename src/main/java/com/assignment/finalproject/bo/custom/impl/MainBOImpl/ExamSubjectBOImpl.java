@@ -1,13 +1,11 @@
 package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
-import com.assignment.finalproject.bo.custom.ExamShedulBO;
 import com.assignment.finalproject.bo.custom.ExamSubjectBO;
-import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectDAOImpl;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
+import com.assignment.finalproject.entity.sub.ExamSubject;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,12 +16,12 @@ public class ExamSubjectBOImpl implements ExamSubjectBO {
 
     @Override
     public boolean saveExamSubject(ExamSubjectIdDTO subjectIdDTO) throws SQLException {
-        return examSubjectDAO.save(subjectIdDTO);
+        return examSubjectDAO.save(new ExamSubject(subjectIdDTO.getExamId(),subjectIdDTO.getSubjectId()));
     }
 
     @Override
-    public boolean upDateExamSubject(ExamScheduleDTO examScheduleDTO) throws SQLException {
-        return examSubjectDAO.upDate(examScheduleDTO);
+    public boolean upDateExamSubject(ExamScheduleDTO examScheduleDTO) throws SQLException, ClassNotFoundException {
+        return examSubjectDAO.upDate(new ExamSubject(examScheduleDTO.getSubjectID(),examScheduleDTO.getExamId()));
     }
 
 
@@ -33,12 +31,12 @@ public class ExamSubjectBOImpl implements ExamSubjectBO {
     }
 
     @Override
-    public ArrayList<ExamSubjectIdDTO> getAllExamSubject() throws SQLException {
+    public ArrayList<ExamSubject> getAllExamSubject() throws SQLException, ClassNotFoundException {
         return examSubjectDAO.getAll();
     }
 
     @Override
-    public ArrayList<ExamSubjectIdDTO> searchExamSubject() {
+    public ArrayList<ExamSubject> searchExamSubject() throws SQLException, ClassNotFoundException {
         return examSubjectDAO.search();
     }
 

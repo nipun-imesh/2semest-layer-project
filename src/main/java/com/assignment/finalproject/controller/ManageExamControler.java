@@ -1,5 +1,10 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.HallBO;
+import com.assignment.finalproject.bo.custom.ManageExamBO;
+import com.assignment.finalproject.bo.custom.QueryBO;
+import com.assignment.finalproject.bo.custom.SubjectBO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.*;
@@ -30,15 +35,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ManageExamControler implements Initializable {
-
-    ManageExamDAOImpl manageExamModel = new ManageExamDAOImpl();
-    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
-    HallDAOImpl hallModel = new HallDAOImpl();
-    QueryDAOImpl query= new QueryDAOImpl();
-    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
-    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
-    private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
-
 
     @FXML
     private AnchorPane ANKManageExam;
@@ -106,6 +102,20 @@ public class ManageExamControler implements Initializable {
     @FXML
     private TextField TXTTime;
 
+//    ManageExamDAOImpl manageExamModel = new ManageExamDAOImpl();
+//    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
+    HallDAOImpl hallModel = new HallDAOImpl();
+//    QueryDAOImpl query= new QueryDAOImpl();
+
+    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
+    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
+    private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
+
+    ManageExamBO manageExamBO = (ManageExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.MANAGEEXAM);
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
+    HallBO hallBO = (HallBO) BOFactory.getInstance().getBO(BOFactory.BOType.HALL);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBO(BOFactory.BOType.QUERY);
+
     private void setCellValues() {
 
         COLEcamShedulID.setCellValueFactory(new PropertyValueFactory<>("examShedulID"));
@@ -143,7 +153,7 @@ public class ManageExamControler implements Initializable {
         String examShedulID = LBExamShedulID.getText();
 
         try {
-            boolean isDeleted = manageExamModel.delete(new AddExamListDTO(examID, examShedulID));
+            boolean isDeleted = manageExamBO.deleteExam(new AddExamListDTO(examID, examShedulID));
             if (!isDeleted) {
                 new Alert(Alert.AlertType.ERROR, "Failed to delete exam.").show();
                 return;
@@ -176,8 +186,7 @@ public class ManageExamControler implements Initializable {
         }
 
         try {
-            boolean isUpdated = manageExamModel.upDate(
-                    new AddExamListDTO(examID, examName, grade, hallName, examTime, examDate, examShedulID, subjectID)
+            boolean isUpdated = manageExamBO.upDateExam(new AddExamListDTO(examID, examName, grade, hallName, examTime, examDate, examShedulID, subjectID)
             );
 
             if (!isUpdated) {
@@ -202,7 +211,7 @@ public class ManageExamControler implements Initializable {
         String grade = String.valueOf(COMSelectClass.getValue());
 
         try {
-            ArrayList<ManageExamTM> selectExam = query.getSelectExam(grade);
+            ArrayList<ManageExamTM> selectExam = queryBO.getSelectExam(grade);
             TBLSetExam.setItems(FXCollections.observableArrayList(selectExam));
 
         } catch (SQLException e) {
@@ -213,7 +222,7 @@ public class ManageExamControler implements Initializable {
         try {
             if (grade.equals("6") || grade.equals("7") || grade.equals("8") || grade.equals("9")) {
                 ObservableList<String> observableList = FXCollections.observableArrayList();
-                ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get6TO9Subject();
+                ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get6TO9Subject();
                 for (SabjectDTO sabjectDTO : sabjectDTOS) {
                     observableList.add(sabjectDTO.getSubjectId());
                 }
@@ -221,7 +230,7 @@ public class ManageExamControler implements Initializable {
 
             } else if (grade.equals("10") || grade.equals("11")) {
                 ObservableList<String> observableList = FXCollections.observableArrayList();
-                ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get10TO11Subject();
+                ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get10TO11Subject();
                 for (SabjectDTO sabjectDTO : sabjectDTOS) {
                     observableList.add(sabjectDTO.getSubjectId());
                 }
@@ -256,7 +265,7 @@ public class ManageExamControler implements Initializable {
 
         String subjectID = TBLSetExam.getSelectionModel().getSelectedItem().getSubjectID();
         try {
-            LBSetsubject.setText(subjectModel.getSubjectName(subjectID));
+            LBSetsubject.setText(subjectBO.getSubjectName(subjectID));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,9 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.AddMarkBO;
+import com.assignment.finalproject.bo.custom.ClassBO;
+import com.assignment.finalproject.bo.custom.SubjectBO;
 import com.assignment.finalproject.dto.main.AddMarkDTO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.AddMarkCartTM;
@@ -7,6 +11,7 @@ import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.SubjectDAOImpl;
+import com.assignment.finalproject.entity.sub.Classes;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,13 +29,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddMarkPageControler implements Initializable {
-
-    ClassDAOImpl classModel = new ClassDAOImpl();
-    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
-    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
-    private final ObservableList<AddMarkCartTM> addMarkCartTMS = FXCollections.observableArrayList();
-    private final ObservableList<GetStudentNameIdTM> getStudentNameIdTMS = FXCollections.observableArrayList();
-
 
     @FXML
     private AnchorPane ANKMaksManege;
@@ -110,6 +108,18 @@ public class AddMarkPageControler implements Initializable {
     @FXML
     private TextField TXTMark;
 
+      ClassDAOImpl classModel = new ClassDAOImpl();
+//    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
+//    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
+
+//    ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+    AddMarkBO addMarkBO = (AddMarkBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDMARK);
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
+
+    private final ObservableList<AddMarkCartTM> addMarkCartTMS = FXCollections.observableArrayList();
+    private final ObservableList<GetStudentNameIdTM> getStudentNameIdTMS = FXCollections.observableArrayList();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -142,7 +152,7 @@ public class AddMarkPageControler implements Initializable {
         }
 
         try {
-          boolean  isSaved = addMarkModel.palesAllMark(playsStudentAllMarkDTOS);
+          boolean  isSaved = addMarkBO.palesAllMark(playsStudentAllMarkDTOS);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Saved...").show();
@@ -170,7 +180,7 @@ public class AddMarkPageControler implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Please enter all fields").show();
         } else {
 
-            ArrayList<GetStudentNameIdTM> getStudentNameIdDTOS = addMarkModel.getStudentNameId(new AddMarkDTO(classId, grade));
+            ArrayList<GetStudentNameIdTM> getStudentNameIdDTOS = addMarkBO.getStudentNameId(new AddMarkDTO(classId, grade));
 
             TBLStudent.setItems(FXCollections.observableArrayList(getStudentNameIdDTOS));
             setCellValues();
@@ -205,7 +215,7 @@ public class AddMarkPageControler implements Initializable {
 
         ArrayList<ExamNameDTO> examNameDTOS = null;
         try {
-            examNameDTOS = addMarkModel.getExamList(classNumber);
+            examNameDTOS = addMarkBO.getExamList(classNumber);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -228,7 +238,7 @@ public class AddMarkPageControler implements Initializable {
     void selectSubjectOnAction(ActionEvent event) {
         String subject = COMSubjectID.getValue();
         try {
-            LBSubjectName.setText(subjectModel.getSubjectName(subject));
+            LBSubjectName.setText(subjectBO.getSubjectName(subject));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -239,7 +249,7 @@ public class AddMarkPageControler implements Initializable {
         String examName = String.valueOf(COBExamNAme.getValue());
 
         try {
-            String examID = addMarkModel.fineExamId(examName);
+            String examID = addMarkBO.fineExamId(examName);
             LBExamId.setText(examID);
         } catch (SQLException e) {
            new Alert(Alert.AlertType.ERROR, "Exam not found").show();
@@ -280,7 +290,7 @@ public class AddMarkPageControler implements Initializable {
             TXTMark.setStyle("");
         }
 
-        boolean subjectExist = addMarkModel.checkStudentExamSubject(new ExamSubjectIdDTO(studentID, examID, subjectID));
+        boolean subjectExist = addMarkBO.checkStudentExamSubject(new ExamSubjectIdDTO(studentID, examID, subjectID));
         if (subjectExist) {
             new Alert(Alert.AlertType.ERROR, "Subject already exists for this student").show();
             return;
@@ -330,9 +340,9 @@ public class AddMarkPageControler implements Initializable {
 
     private void loadGrade() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+        ArrayList<Classes> classDTOS =  classModel.getAll();
 
-        for (ClassDTO classDTO : classDTOS) {
+        for (Classes classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
         COMGrade.setItems(observableList);
@@ -349,7 +359,7 @@ public class AddMarkPageControler implements Initializable {
 
         if (classNumber.equals("6") || classNumber.equals("7") || classNumber.equals("8") || classNumber.equals("9")) {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get6TO9Subject();
+            ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get6TO9Subject();
             for (SabjectDTO sabjectDTO : sabjectDTOS) {
                 observableList.add(sabjectDTO.getSubjectId());
             }
@@ -357,7 +367,7 @@ public class AddMarkPageControler implements Initializable {
 
         } else if (classNumber.equals("10") || classNumber.equals("11")) {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get10TO11Subject();
+            ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get10TO11Subject();
             for (SabjectDTO sabjectDTO : sabjectDTOS) {
                 observableList.add(sabjectDTO.getSubjectId());
             }

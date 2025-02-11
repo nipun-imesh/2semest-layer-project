@@ -1,11 +1,11 @@
 package com.assignment.finalproject.dao.custom;
 
 import com.assignment.finalproject.dao.CrudDAO;
-import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
-import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
+import com.assignment.finalproject.entity.sub.ExamSchedule;
+import com.assignment.finalproject.entity.sub.ExamSubject;
 
 import java.sql.SQLException;
 
-public interface ExamSubjectDAO extends CrudDAO<ExamSubjectIdDTO> {
-    public boolean upDate(ExamScheduleDTO examScheduleDTO) throws SQLException;
+public interface ExamSubjectDAO extends CrudDAO<ExamSubject> {
+//    public boolean upDate(ExamSchedule examScheduleDTO) throws SQLException;
 }

@@ -1,12 +1,11 @@
 package com.assignment.finalproject.bo.custom.impl.subBOImpl;
 
 import com.assignment.finalproject.bo.custom.ClassBO;
-import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,27 +15,27 @@ public class ClassBOImpl implements ClassBO {
 
     @Override
     public boolean save(ClassDTO dto) throws SQLException {
-        return classDAO.save(dto);
+        return false;
     }
 
     @Override
     public ArrayList<ClassDTO> getAll() throws SQLException {
-        return classDAO.getAll();
+        return null;
     }
 
     @Override
     public ArrayList<ClassDTO> search() {
-        return classDAO.search();
+        return null;
     }
 
     @Override
-    public String getID() throws SQLException {
+    public String getID() throws SQLException, ClassNotFoundException {
         return classDAO.getID();
     }
 
     @Override
-    public boolean upDate(ClassDTO dto) throws SQLException {
-        return classDAO.upDate(dto);
+    public boolean upDate(ClassDTO dto) throws SQLException, ClassNotFoundException {
+        return false;
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.AddMarkBO;
+import com.assignment.finalproject.bo.custom.ClassBO;
+import com.assignment.finalproject.bo.custom.QueryBO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.StudentSubjectDetaliDTO;
@@ -8,6 +12,7 @@ import com.assignment.finalproject.dto.sub.ExamNameDTO;
 import com.assignment.finalproject.dto.tm.GetResaltTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
+import com.assignment.finalproject.entity.sub.Classes;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,10 +36,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class StudentResaltViewPageCointroler implements Initializable {
-
-    ClassDAOImpl classModel = new ClassDAOImpl();
-    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
-    QueryDAOImpl query = new QueryDAOImpl();
 
     @FXML
     private Button BUTBack;
@@ -68,6 +69,14 @@ public class StudentResaltViewPageCointroler implements Initializable {
 
     @FXML
     private TableView<GetResaltTM> TBLResalt;
+
+    ClassDAOImpl classModel = new ClassDAOImpl();
+//    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
+//    QueryDAOImpl query = new QueryDAOImpl();
+
+    ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+    AddMarkBO addMarkBO = (AddMarkBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDMARK);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBO(BOFactory.BOType.QUERY);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -113,7 +122,7 @@ public class StudentResaltViewPageCointroler implements Initializable {
         System.out.println("examName: " + examName);
 
         try {
-            ArrayList<GetResaltTM> getResaltTMS = query.search(new StudentSubjectDetaliDTO(studentId, classId, grade, examName));
+            ArrayList<GetResaltTM> getResaltTMS = queryBO.search(new StudentSubjectDetaliDTO(studentId, classId, grade, examName));
             if (getResaltTMS.isEmpty()) {
                 System.out.println("No results found.");
             }
@@ -145,7 +154,7 @@ public class StudentResaltViewPageCointroler implements Initializable {
 
         ArrayList<ExamNameDTO> examNameDTOS = null;
         try {
-            examNameDTOS = addMarkModel.getExamList(classNumber);
+            examNameDTOS = addMarkBO.getExamList(classNumber);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -166,9 +175,9 @@ public class StudentResaltViewPageCointroler implements Initializable {
 //        ObservableList<String> observableList = FXCollections.observableArrayList();
 //        ObservableList<ClassDTO> classDTOS = classModel.getAllClass();
 
-        ArrayList<ClassDTO> classDTOS = classModel.getAll();
+        ArrayList<Classes> classDTOS = classModel.getAll();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        for (ClassDTO classDTO : classDTOS) {
+        for (Classes classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
         COMGrade.setItems(observableList);

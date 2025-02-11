@@ -1,7 +1,8 @@
 package com.assignment.finalproject.bo;
 
-import com.assignment.finalproject.bo.custom.impl.MainBOImpl.AddExamListBOImpl;
-import com.assignment.finalproject.bo.custom.impl.MainBOImpl.AddMarkBOImpl;
+import com.assignment.finalproject.bo.custom.impl.MainBOImpl.*;
+import com.assignment.finalproject.bo.custom.impl.subBOImpl.HAllBOImpl;
+import com.assignment.finalproject.bo.custom.impl.subBOImpl.SubjectBOImpl;
 
 public class BOFactory {
 
@@ -26,22 +27,28 @@ public class BOFactory {
             case ADDMARK:
                 return new AddMarkBOImpl();
             case ADDPARENT:
-                return null;
+                return new AddPararentBOImpl();
             case EXAMSCHEDULE:
-                return null;
+                return new ExamShedulBOImpl();
             case EXAMSUBJECT:
-                return null;
+                return new ExamShedulBOImpl();
             case LOGIN:
-                return null;
+                return new LoginBOImpl();
             case MANAGEMARK:
-                return null;
+                return new ManageMarkBOImpl();
             case MANAGEEXAM:
-                return null;
+                return new ManageExamBOImpl();
             case QUERY:
-                return null;
+                return new QueryBOImpl();
             case SENDMAIL:
-                return null;
-            case SIGNIN:}
+                return new SendMailBOImpl();
+            case SIGNIN:
+                return new SigninBOImpl();
+            case SUBJECT:
+                return new SubjectBOImpl();
+            case HALL:
+                return new HAllBOImpl();
+        }
         return null;
     }
 }

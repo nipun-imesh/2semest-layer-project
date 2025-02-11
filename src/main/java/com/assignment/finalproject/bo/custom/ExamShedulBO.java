@@ -1,12 +1,13 @@
 package com.assignment.finalproject.bo.custom;
 
+import com.assignment.finalproject.bo.SuperBO;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ExamShedulBO {
+public interface ExamShedulBO extends SuperBO {
 
      String getShedulID() throws SQLException;
      boolean upDateShedul(AddExamListDTO addExamListDTO) throws SQLException;

@@ -1,5 +1,9 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.ClassBO;
+import com.assignment.finalproject.bo.custom.ManageMarkBO;
+import com.assignment.finalproject.bo.custom.QueryBO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.tm.ManageExamMarkTM;
@@ -7,6 +11,7 @@ import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageMarkDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.subModel.ClassDAOImpl;
+import com.assignment.finalproject.entity.main.AddExamList;
 import com.assignment.finalproject.util.ClassLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +29,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ManageMarkControler implements Initializable {
-
-    ClassDAOImpl classModel = new ClassDAOImpl();
-    ManageMarkDAOImpl manageMarkModel = new ManageMarkDAOImpl();
-    QueryDAOImpl query = new QueryDAOImpl();
 
     @FXML
     private AnchorPane ANKMarkManage;
@@ -92,6 +93,14 @@ public class ManageMarkControler implements Initializable {
     @FXML
     private Label LBcoretDate;
 
+//    ClassDAOImpl classModel = new ClassDAOImpl();
+//    ManageMarkDAOImpl manageMarkModel = new ManageMarkDAOImpl();
+//    QueryDAOImpl query = new QueryDAOImpl();
+
+    ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+    ManageMarkBO manageMarkBO = (ManageMarkBO) BOFactory.getInstance().getBO(BOFactory.BOType.MANAGEMARK);
+    QueryBO queryBO = (QueryBO) BOFactory.getInstance().getBO(BOFactory.BOType.QUERY);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -122,7 +131,7 @@ public class ManageMarkControler implements Initializable {
         ManageExamMarkTM manageExamMarkTM = TBLSelectMark.getSelectionModel().getSelectedItem();
         if (manageExamMarkTM != null) {
             try {
-                boolean isDeleted = manageMarkModel.delete(new ExamSubjectIdDTO(manageExamMarkTM.getExamID(), manageExamMarkTM.getSubjectID()));
+                boolean isDeleted = manageMarkBO.deleteMark(new ExamSubjectIdDTO(manageExamMarkTM.getExamID(), manageExamMarkTM.getSubjectID()));
             if(isDeleted){
                 new Alert(Alert.AlertType.CONFIRMATION, "Mark deleted successfully").show();
             }else {
@@ -174,13 +183,13 @@ public class ManageMarkControler implements Initializable {
 
 
         try {
-            boolean isUpdated = manageMarkModel.upDate(new ExamSubjectIdDTO(mark, studentId, subjectId, examId));
+            boolean isUpdated = manageMarkBO.upDateMark(new ExamSubjectIdDTO(mark, studentId, subjectId, examId));
             if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Mark updated successfully").show();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Mark not updated").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         TXTNewMark.clear();
@@ -199,7 +208,7 @@ public class ManageMarkControler implements Initializable {
         String grade = (String) COMSelectGarde.getValue();
         ArrayList<GetStudentNameIdTM> getStudentNameIdDTOS = null;
         try {
-            getStudentNameIdDTOS = manageMarkModel.getStudentDetail(new ClassDTO( grade,classId));
+            getStudentNameIdDTOS = manageMarkBO.getStudentDetail(new ClassDTO( grade,classId));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -219,7 +228,7 @@ public class ManageMarkControler implements Initializable {
 
             ArrayList<GetStudentNameIdTM> getStudentNameIdDTOS = null;
             try {
-                getStudentNameIdDTOS = manageMarkModel.getStudentDetail(new ClassDTO( grade,classId));
+                getStudentNameIdDTOS = manageMarkBO.getStudentDetail(new ClassDTO( grade,classId));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -236,7 +245,7 @@ public class ManageMarkControler implements Initializable {
 
     private void loadGrade() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ArrayList<ClassDTO> classDTOS =  classModel.getAll();
+        ArrayList<ClassDTO> classDTOS =  classBO.getAll();
 
         for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
@@ -255,7 +264,7 @@ public class ManageMarkControler implements Initializable {
 
         ArrayList<ManageExamMarkTM> manageExamMarkTMS = null;
         try {
-            manageExamMarkTMS = query.getStudentMarkDetail(studentId);
+            manageExamMarkTMS = queryBO.getStudentMarkDetail(studentId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

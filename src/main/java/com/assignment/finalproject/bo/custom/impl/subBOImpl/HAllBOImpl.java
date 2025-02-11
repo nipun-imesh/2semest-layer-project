@@ -42,7 +42,7 @@ public class HAllBOImpl implements HallBO {
     }
 
     @Override
-    public boolean upDate(HallDTO dto) throws SQLException {
+    public boolean upDate(HallDTO dto) throws SQLException, ClassNotFoundException {
         return hallDAO.upDate(dto);
     }
 

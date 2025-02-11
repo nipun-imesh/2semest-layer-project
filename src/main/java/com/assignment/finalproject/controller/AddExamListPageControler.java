@@ -28,13 +28,6 @@ import java.util.ResourceBundle;
 
 public class AddExamListPageControler implements Initializable {
 
-    AddExamListDAOImpl addExamListModel = new AddExamListDAOImpl();
-    HallDAOImpl hallModel = new HallDAOImpl();
-    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
-
-    private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
-
-    AddExamListBO addExamListBO = (AddExamListBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDEXAMLIST);
 
     @FXML
     private AnchorPane ANKAddExampan;
@@ -113,6 +106,15 @@ public class AddExamListPageControler implements Initializable {
 
     @FXML
     private Label LBSbjectName;
+
+    AddExamListDAOImpl addExamListModel = new AddExamListDAOImpl();
+    HallDAOImpl hallModel = new HallDAOImpl();
+    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
+
+    private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
+
+   AddExamListBO addExamListBO = (AddExamListBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDEXAMLIST);
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -330,12 +332,12 @@ public class AddExamListPageControler implements Initializable {
     }
 
     public void getExamShedulID() throws SQLException, ClassNotFoundException {
-        String nextExamShedulID = addExamListBO.getExamShedulID();
+        String nextExamShedulID = addExamListModel.getExamShedulID();
         LBExamShedulID.setText(nextExamShedulID);
     }
 
     public void getExamID() throws SQLException, ClassNotFoundException {
-        String nextExamID = addExamListBO.getExamID();
+        String nextExamID = addExamListModel.getID();
         LBExamID.setText(nextExamID);
     }
 

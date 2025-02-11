@@ -1,6 +1,5 @@
 package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
-import com.assignment.finalproject.bo.custom.ManageExamBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulDAOImpl;
@@ -9,6 +8,11 @@ import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageExamDAOImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
+import com.assignment.finalproject.entity.main.AddExamList;
+import com.assignment.finalproject.entity.sub.ExamSchedule;
+import com.assignment.finalproject.bo.custom.ManageExamBO;
+import com.assignment.finalproject.entity.sub.ExamSubject;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,7 +43,7 @@ public class ManageExamBOImpl implements ManageExamBO {
             }
 
 
-            boolean isScheduleUpdated = examShedulDAO.upDate(new AddExamListDTO(
+            boolean isScheduleUpdated = examShedulDAO.upDate(new ExamSchedule(
                     addExamListDTO.getExamID(),
                     addExamListDTO.getHallName(),
                     addExamListDTO.getExamTime(),
@@ -52,7 +56,7 @@ public class ManageExamBOImpl implements ManageExamBO {
                 return false;
             }
 
-            boolean isExamSubjectIdUpdate = examSubjectDAO.upDate(new ExamScheduleDTO(
+            boolean isExamSubjectIdUpdate = examSubjectDAO.upDate(new ExamSubject(
                     addExamListDTO.getSubjectID(),
                     addExamListDTO.getExamID()
 
@@ -69,6 +73,8 @@ public class ManageExamBOImpl implements ManageExamBO {
             e.printStackTrace();
             connection.rollback();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             connection.setAutoCommit(true);
         }
@@ -112,17 +118,17 @@ public class ManageExamBOImpl implements ManageExamBO {
 
     @Override
     public boolean saveExam(AddExamListDTO dto) throws SQLException {
-        return manageExamDAO.save(dto);
+        return false;
     }
 
     @Override
     public ArrayList<AddExamListDTO> getAllExam() throws SQLException {
-        return manageExamDAO.getAll();
+        return null;
     }
 
     @Override
-    public ArrayList<AddExamListDTO> searchExam() {
-        return manageExamDAO.search();
+    public ArrayList<AddExamList> searchExam() {
+        return null;
     }
 
     @Override

@@ -1,16 +1,13 @@
 package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
 import com.assignment.finalproject.bo.custom.AddParentBO;
-import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
-import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentDAOImpl;
 import com.assignment.finalproject.dto.main.AddParentDTO;
+import com.assignment.finalproject.entity.main.AddParent;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class AddPararentBOImpl implements AddParentBO {
 
@@ -18,11 +15,11 @@ public class AddPararentBOImpl implements AddParentBO {
 
     @Override
     public boolean saveParent(AddParentDTO addParentDTO) throws SQLException {
-        return addParentDAO.save(addParentDTO);
+        return addParentDAO.save(new AddParent(addParentDTO.getParentId(),addParentDTO.getParentName(),addParentDTO.getParentEmail()));
     }
 
     @Override
-    public ArrayList<AddParentDTO> getAllParent() throws SQLException {
+    public ArrayList<AddParent> getAllParent() throws SQLException {
         return addParentDAO.getAll();
     }
 
@@ -39,7 +36,7 @@ public class AddPararentBOImpl implements AddParentBO {
 
     @Override
     public boolean upDatePerent(AddParentDTO addParentDTO) throws SQLException {
-        return addParentDAO.upDate(addParentDTO);
+        return addParentDAO.upDate(new AddParent(addParentDTO.getParentName(),addParentDTO.getParentEmail(),addParentDTO.getStatus(),addParentDTO.getParentId()));
     }
 
     @Override

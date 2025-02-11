@@ -1,14 +1,13 @@
 package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
 import com.assignment.finalproject.bo.custom.ManageMarkBO;
-import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageMarkDAOImpl;
 import com.assignment.finalproject.dto.sub.ClassDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
+import com.assignment.finalproject.entity.sub.ExamSubject;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,13 +21,8 @@ public class ManageMarkBOImpl implements ManageMarkBO {
     }
 
     @Override
-    public boolean upDateMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException {
-       return manageMarkDAO.upDate(examSubjectIdDTO);
-    }
-
-    @Override
-    public boolean delete(String id) throws SQLException {
-        return manageMarkDAO.delete(id);
+    public boolean upDateMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException, ClassNotFoundException {
+       return manageMarkDAO.upDate( new ExamSubject(examSubjectIdDTO.getMark(),examSubjectIdDTO.getExamId(),examSubjectIdDTO.getStudentId(),examSubjectIdDTO.getSubjectId()));
     }
 
     public boolean deleteMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException {
@@ -37,17 +31,17 @@ public class ManageMarkBOImpl implements ManageMarkBO {
     }
 
     @Override
-    public boolean saveMark(ExamSubjectIdDTO dto) throws SQLException {
-        return manageMarkDAO.save(dto);
+    public boolean saveMark(ExamSubjectIdDTO dto) throws SQLException, ClassNotFoundException {
+        return manageMarkDAO.save(new ExamSubject(dto.getMark(),dto.getExamId(),dto.getStudentId(),dto.getSubjectId()));
     }
 
     @Override
-    public ArrayList<ExamSubjectIdDTO> getAllSubject() throws SQLException {
+    public ArrayList<ExamSubject> getAllSubject() throws SQLException {
         return manageMarkDAO.getAll();
     }
 
     @Override
-    public ArrayList<ExamSubjectIdDTO> search() {
+    public ArrayList<ExamSubject> search() {
         return manageMarkDAO.search();
     }
 
