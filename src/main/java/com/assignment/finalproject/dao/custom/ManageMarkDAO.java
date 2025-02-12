@@ -10,6 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ManageMarkDAO extends CrudDAO<ExamSubject> {
-    public ArrayList<GetStudentNameIdTM> getStudentDetail(ClassDTO classDTO) throws SQLException;
-
+     ArrayList<GetStudentNameIdTM> getStudentDetail(ClassDTO classDTO) throws SQLException;
+     boolean delete(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException;
 }

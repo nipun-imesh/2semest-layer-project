@@ -18,7 +18,7 @@ public interface AddMarkBO extends SuperBO {
      boolean palesAllMark(ArrayList<PlaysStudentAllMarkDTO> playsStudentAllMarkDTOS) throws SQLException;
      boolean checkStudentExamSubject(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException;
      boolean save(AddMarkDTO dto) throws SQLException;
-     ArrayList<AddMarkDTO> getAll() throws SQLException;
+     ArrayList<AddMarkDTO> getAll() throws SQLException, ClassNotFoundException;
      ArrayList<AddMarkDTO> search();
      String getID() throws SQLException;
      boolean upDate(AddMarkDTO dto) throws SQLException;

@@ -1,7 +1,7 @@
 package com.assignment.finalproject.dao.custom.Impl.mainMOdel;
 
-import com.assignment.finalproject.dao.CrudDAO;
 import com.assignment.finalproject.dao.CrudUtil;
+import com.assignment.finalproject.dao.custom.StudentManageDAO;
 import com.assignment.finalproject.dto.main.StudentManageDTO;
 import com.assignment.finalproject.entity.main.StudentManage;
 import javafx.scene.control.Alert;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class StudentManageDAOImpl implements CrudDAO<StudentManage> {
+public class StudentManageDAOImpl implements StudentManageDAO {
 
     @Override
     public  boolean save(StudentManage studto) {
@@ -41,7 +41,7 @@ public class StudentManageDAOImpl implements CrudDAO<StudentManage> {
         ArrayList<StudentManage> studentManageDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            StudentManage studentManageDTO = new StudentManage(
+            StudentManage studentManage = new StudentManage(
                     rst.getString(1),
                     rst.getString(2),
                     rst.getInt(3),
@@ -51,7 +51,7 @@ public class StudentManageDAOImpl implements CrudDAO<StudentManage> {
                     rst.getString(7),
                     rst.getString(8)
             );
-            studentManageDTOS.add(studentManageDTO);
+            studentManageDTOS.add(studentManage);
         }
         return studentManageDTOS;
     }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class ManageMarkDAOImpl implements ManageMarkDAO {
 
+    @Override
     public ArrayList<GetStudentNameIdTM> getStudentDetail(ClassDTO classDTO) throws SQLException {
         ResultSet rst = CrudUtil.execute(
                 "SELECT * FROM student WHERE   class = ? AND s_grade = ? AND status = 'Active'",
@@ -46,6 +47,7 @@ public class ManageMarkDAOImpl implements ManageMarkDAO {
         return false;
     }
 
+    @Override
     public boolean delete(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException {
 
         return CrudUtil.execute("DELETE FROM marks WHERE ex_id = ? AND sub_id = ?",

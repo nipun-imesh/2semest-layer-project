@@ -13,9 +13,9 @@ public interface ManageMarkBO extends SuperBO {
 
     public ArrayList<GetStudentNameIdTM> getStudentDetail(ClassDTO classDTO) throws SQLException ;
     public boolean upDateMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException, ClassNotFoundException;
-    public boolean deleteMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException ;
+    public boolean deleteMark(ExamSubjectIdDTO examSubjectIdDTO) throws SQLException, ClassNotFoundException;
     public boolean saveMark(ExamSubjectIdDTO dto) throws SQLException, ClassNotFoundException;
-    public ArrayList<ExamSubject> getAllSubject() throws SQLException;
-    public ArrayList<ExamSubject> search() ;
-    public String getSubjectD() throws SQLException;
+    public ArrayList<ExamSubject> getAllSubject() throws SQLException, ClassNotFoundException;
+    public ArrayList<ExamSubject> search() throws SQLException, ClassNotFoundException;
+    public String getSubjectD() throws SQLException, ClassNotFoundException;
 }

@@ -15,4 +15,10 @@ public class AddParentDTO {
     private String parentName;
     private String parentEmail;
     private String status = "Active";
+
+    public AddParentDTO(String parentId, String parentName, String parentEmail) {
+        this.parentId = parentId;
+        this.parentName = parentName;
+        this.parentEmail = parentEmail;
+    }
 }

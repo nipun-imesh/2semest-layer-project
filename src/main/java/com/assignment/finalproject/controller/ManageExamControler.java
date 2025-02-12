@@ -104,11 +104,11 @@ public class ManageExamControler implements Initializable {
 
 //    ManageExamDAOImpl manageExamModel = new ManageExamDAOImpl();
 //    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
-    HallDAOImpl hallModel = new HallDAOImpl();
+//    HallDAOImpl hallModel = new HallDAOImpl();
 //    QueryDAOImpl query= new QueryDAOImpl();
 
-    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
-    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
+//    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
+//    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
 
     ManageExamBO manageExamBO = (ManageExamBO) BOFactory.getInstance().getBO(BOFactory.BOType.MANAGEEXAM);
@@ -278,7 +278,7 @@ public class ManageExamControler implements Initializable {
 
     private void loadExamHall() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<HallDTO> hallDTOS = hallModel.getAllHall();
+        ObservableList<HallDTO> hallDTOS = hallBO.getAllHall();
         for (HallDTO hallDTO : hallDTOS) {
             observableList.add(hallDTO.getHallId());
         }

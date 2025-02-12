@@ -29,4 +29,9 @@ public class StudentManage {
         this.parentId = parentId;
         this.studentId = studentId;
     }
+
+    public StudentManage(String studentId, String studentName) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+    }
 }

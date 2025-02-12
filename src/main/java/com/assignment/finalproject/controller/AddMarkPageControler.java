@@ -108,11 +108,11 @@ public class AddMarkPageControler implements Initializable {
     @FXML
     private TextField TXTMark;
 
-      ClassDAOImpl classModel = new ClassDAOImpl();
+  //    ClassDAOImpl classModel = new ClassDAOImpl();
 //    AddMarkDAOImpl addMarkModel = new AddMarkDAOImpl();
 //    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
 
-//    ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
+    ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
     AddMarkBO addMarkBO = (AddMarkBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDMARK);
     SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
@@ -127,6 +127,8 @@ public class AddMarkPageControler implements Initializable {
             loadGrade();
             loadClass((ComboBox<String>) COMSetClass);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         BUTAddMark.setDisable(true);
@@ -176,7 +178,7 @@ public class AddMarkPageControler implements Initializable {
         String classId = (String) COMSetClass.getValue();
         String grade = String.valueOf(COMGrade.getValue());
 
-        if (grade.isEmpty() && classId.isEmpty()) {
+        if (grade.isEmpty() || classId.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please enter all fields").show();
         } else {
 
@@ -338,11 +340,11 @@ public class AddMarkPageControler implements Initializable {
         TBLMarkTable.getItems().clear();
     }
 
-    private void loadGrade() throws SQLException {
+    private void loadGrade() throws SQLException, ClassNotFoundException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ArrayList<Classes> classDTOS =  classModel.getAll();
+        ArrayList<ClassDTO> classDTOS =  classBO.getAll();
 
-        for (Classes classDTO : classDTOS) {
+        for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
         COMGrade.setItems(observableList);

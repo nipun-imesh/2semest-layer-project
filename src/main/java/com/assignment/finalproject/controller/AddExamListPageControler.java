@@ -2,6 +2,8 @@ package com.assignment.finalproject.controller;
 
 import com.assignment.finalproject.bo.BOFactory;
 import com.assignment.finalproject.bo.custom.AddExamListBO;
+import com.assignment.finalproject.bo.custom.HallBO;
+import com.assignment.finalproject.bo.custom.SubjectBO;
 import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.ExamCartTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
@@ -107,14 +109,15 @@ public class AddExamListPageControler implements Initializable {
     @FXML
     private Label LBSbjectName;
 
-    AddExamListDAOImpl addExamListModel = new AddExamListDAOImpl();
-    HallDAOImpl hallModel = new HallDAOImpl();
-    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
+//    AddExamListDAOImpl addExamListModel = new AddExamListDAOImpl();
+//    HallDAOImpl hallModel = new HallDAOImpl();
+//    SubjectDAOImpl subjectModel = new SubjectDAOImpl();
 
     private final ObservableList<ExamCartTM> examCartTMS = FXCollections.observableArrayList();
 
-   AddExamListBO addExamListBO = (AddExamListBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDEXAMLIST);
-
+    AddExamListBO addExamListBO = (AddExamListBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDEXAMLIST);
+    HallBO hallBO = (HallBO) BOFactory.getInstance().getBO(BOFactory.BOType.HALL);
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getInstance().getBO(BOFactory.BOType.SUBJECT);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -249,7 +252,7 @@ public class AddExamListPageControler implements Initializable {
     }
 
     @FXML
-    void addAllOnAction(ActionEvent event) throws SQLException {
+    void addAllOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         ArrayList<ExamDTO> examDTOS = new ArrayList<>();
         ArrayList<ExamScheduleDTO> examScheduleDTOS = new ArrayList<>();
@@ -304,7 +307,7 @@ public class AddExamListPageControler implements Initializable {
 
         if (getComboboxValues().equals("6") || getComboboxValues().equals("7") || getComboboxValues().equals("8") || getComboboxValues().equals("9")) {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get6TO9Subject();
+            ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get6TO9Subject();
             for (SabjectDTO sabjectDTO : sabjectDTOS) {
                 observableList.add(sabjectDTO.getSubjectId());
             }
@@ -312,7 +315,7 @@ public class AddExamListPageControler implements Initializable {
 
         } else if (getComboboxValues().equals("10") || getComboboxValues().equals("11")) {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            ObservableList<SabjectDTO> sabjectDTOS = subjectModel.get10TO11Subject();
+            ObservableList<SabjectDTO> sabjectDTOS = subjectBO.get10TO11Subject();
             for (SabjectDTO sabjectDTO : sabjectDTOS) {
                 observableList.add(sabjectDTO.getSubjectId());
             }
@@ -325,25 +328,25 @@ public class AddExamListPageControler implements Initializable {
 
         String subjectID = String.valueOf(COMSubjectID.getValue());
         try {
-            LBSbjectName.setText(subjectModel.getSubjectName(subjectID));
+            LBSbjectName.setText(subjectBO.getSubjectName(subjectID));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void getExamShedulID() throws SQLException, ClassNotFoundException {
-        String nextExamShedulID = addExamListModel.getExamShedulID();
+        String nextExamShedulID = addExamListBO.getExamShedulID();
         LBExamShedulID.setText(nextExamShedulID);
     }
 
     public void getExamID() throws SQLException, ClassNotFoundException {
-        String nextExamID = addExamListModel.getID();
+        String nextExamID = addExamListBO.getExamID();
         LBExamID.setText(nextExamID);
     }
 
     private void loadExamHall() throws SQLException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ObservableList<HallDTO> hallDTOS =  hallModel.getAllHall();
+        ObservableList<HallDTO> hallDTOS =  hallBO.getAllHall();
         for (HallDTO hallDTO : hallDTOS) {
             observableList.add(hallDTO.getHallId());
         }

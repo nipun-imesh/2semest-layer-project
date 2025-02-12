@@ -2,9 +2,12 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
+import com.assignment.finalproject.dao.custom.ExamShedulDAO;
+import com.assignment.finalproject.dao.custom.ExamSubjectDAO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ManageExamDAOImpl;
+import com.assignment.finalproject.dao.custom.ManageExamDAO;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
@@ -20,9 +23,9 @@ import java.util.ArrayList;
 
 public class ManageExamBOImpl implements ManageExamBO {
 
-    ManageExamDAOImpl manageExamDAO = (ManageExamDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.MANAGEEXAM);
-    ExamShedulDAOImpl examShedulDAO = (ExamShedulDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
-    ExamSubjectDAOImpl examSubjectDAO = (ExamSubjectDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+    ManageExamDAO manageExamDAO = (ManageExamDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.MANAGEEXAM);
+    ExamShedulDAO examShedulDAO = (ExamShedulDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
+    ExamSubjectDAO examSubjectDAO = (ExamSubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
 
     public boolean upDateExam(AddExamListDTO addExamListDTO) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
@@ -30,12 +33,9 @@ public class ManageExamBOImpl implements ManageExamBO {
 
         try {
 
-            boolean isExamUpdated = CrudUtil.execute(
-                    "UPDATE exam SET e_name = ?, grade = ? WHERE ex_id = ?",
-                    addExamListDTO.getExamName(),
+            boolean isExamUpdated = manageExamDAO.upDate(new AddExamList(addExamListDTO.getExamName(),
                     addExamListDTO.getGrade(),
-                    addExamListDTO.getExamID()
-            );
+                    addExamListDTO.getExamID()));
 
             if (!isExamUpdated) {
                 connection.rollback();
@@ -111,6 +111,8 @@ public class ManageExamBOImpl implements ManageExamBO {
             e.printStackTrace();
             connection.rollback();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             connection.setAutoCommit(true);
         }
@@ -132,7 +134,7 @@ public class ManageExamBOImpl implements ManageExamBO {
     }
 
     @Override
-    public String getExamID() throws SQLException {
+    public String getExamID() throws SQLException, ClassNotFoundException {
         return manageExamDAO.getID();
     }
 }

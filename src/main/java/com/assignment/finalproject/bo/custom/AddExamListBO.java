@@ -12,10 +12,11 @@ import java.util.ArrayList;
 public interface AddExamListBO extends SuperBO {
 
       String getExamShedulID( ) throws SQLException, ClassNotFoundException;
-      boolean saveExamList(ArrayList<ExamDTO> examDTOList, ArrayList<ExamScheduleDTO> examScheduleDTOList, ArrayList<ExamSubjectIdDTO> examSubjectIdDTOList) throws SQLException;
+      boolean saveExamList(ArrayList<ExamDTO> examDTOList, ArrayList<ExamScheduleDTO> examScheduleDTOList, ArrayList<ExamSubjectIdDTO> examSubjectIdDTOList) throws SQLException, ClassNotFoundException;
       ArrayList<Exam> getAllExamList() throws SQLException, ClassNotFoundException;
       ArrayList<ExamDTO> searcheExamLis() throws SQLException, ClassNotFoundException ;
       String getExamID() throws SQLException, ClassNotFoundException;
       boolean upDate(ExamDTO dto) throws SQLException, ClassNotFoundException;
       boolean delete(String id) throws SQLException, ClassNotFoundException ;
+
 }

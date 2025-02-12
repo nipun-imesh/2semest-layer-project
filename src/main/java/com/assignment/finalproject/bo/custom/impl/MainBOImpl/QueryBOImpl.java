@@ -4,6 +4,7 @@ import com.assignment.finalproject.bo.custom.QueryBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.QueryDAOImpl;
+import com.assignment.finalproject.dao.custom.QueryDAO;
 import com.assignment.finalproject.dto.main.StudentSubjectDetaliDTO;
 import com.assignment.finalproject.dto.tm.GetResaltTM;
 import com.assignment.finalproject.dto.tm.ManageExamMarkTM;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class QueryBOImpl implements QueryBO {
 
-    QueryDAOImpl queryDAO = (QueryDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.QUERY);
 
     @Override
     public ArrayList<ManageExamTM> getSelectExam(String grade) throws SQLException {

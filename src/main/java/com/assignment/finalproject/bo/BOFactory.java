@@ -1,6 +1,7 @@
 package com.assignment.finalproject.bo;
 
 import com.assignment.finalproject.bo.custom.impl.MainBOImpl.*;
+import com.assignment.finalproject.bo.custom.impl.subBOImpl.ClassBOImpl;
 import com.assignment.finalproject.bo.custom.impl.subBOImpl.HAllBOImpl;
 import com.assignment.finalproject.bo.custom.impl.subBOImpl.SubjectBOImpl;
 
@@ -31,7 +32,7 @@ public class BOFactory {
             case EXAMSCHEDULE:
                 return new ExamShedulBOImpl();
             case EXAMSUBJECT:
-                return new ExamShedulBOImpl();
+                return new ExamSubjectBOImpl();
             case LOGIN:
                 return new LoginBOImpl();
             case MANAGEMARK:
@@ -48,6 +49,10 @@ public class BOFactory {
                 return new SubjectBOImpl();
             case HALL:
                 return new HAllBOImpl();
+            case STUDENTMANAGE:
+                return new StudentMnagrBOImpl();
+            case CLASS:
+                return new ClassBOImpl();
         }
         return null;
     }

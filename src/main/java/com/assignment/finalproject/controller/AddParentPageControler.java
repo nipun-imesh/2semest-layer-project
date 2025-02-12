@@ -1,5 +1,7 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.AddParentBO;
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentDAOImpl;
@@ -20,10 +22,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddParentPageControler implements Initializable {
-    AddParentTM addParentTM = new AddParentTM();
-    AddParentDAOImpl addParentCModel = new AddParentDAOImpl();
-
-
 
     @FXML
     private Button BUtSave;
@@ -61,6 +59,10 @@ public class AddParentPageControler implements Initializable {
     @FXML
     private Button btnDelete;
 
+    AddParentTM addParentTM = new AddParentTM();
+  //  AddParentDAOImpl addParentCModel = new AddParentDAOImpl();
+    AddParentBO addParentBO = (AddParentBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDPARENT);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TBCParentId.setCellValueFactory(new PropertyValueFactory<>("parentId"));
@@ -69,7 +71,7 @@ public class AddParentPageControler implements Initializable {
         try {
             loadNextParentID();
             loadAllParent();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         BUTUpdate.setDisable(true);
@@ -87,6 +89,8 @@ public class AddParentPageControler implements Initializable {
         try {
             loadNextParentID();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -122,7 +126,7 @@ public class AddParentPageControler implements Initializable {
                     "Active"
             );
             try {
-                if (addParentCModel.save(addParentDTO)) {
+                if (addParentBO.saveParent(new AddParentDTO(addParentDTO.getParentId(),addParentDTO.getParentName(),addParentDTO.getParentEmail()))) {
                     new Alert(Alert.AlertType.INFORMATION, "Parent saved...!").show();
                     loadAllParent();
                     loadNextParentID();
@@ -130,6 +134,8 @@ public class AddParentPageControler implements Initializable {
                 }
             } catch (SQLException e) {
                new Alert(Alert.AlertType.ERROR, "Parent not saved...!").show();
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -162,12 +168,12 @@ public class AddParentPageControler implements Initializable {
                 "Active"
         );
         try {
-            if (addParentCModel.upDate(addParentDTO)) {
+            if (addParentBO.upDatePerent(new AddParentDTO(addParentDTO.getParentId(),addParentDTO.getParentName(),addParentDTO.getParentEmail()))) {
                 new Alert(Alert.AlertType.INFORMATION, "Parent updated...!").show();
                 loadAllParent();
                 loadNextParentID();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, "Parent not updated...!").show();
             throw new RuntimeException(e);
         }
@@ -177,12 +183,12 @@ public class AddParentPageControler implements Initializable {
     void BUTDeletOnAction(ActionEvent event) {
         String parentID = LBParentId.getText();
         try {
-            if (addParentCModel.delete(parentID)) {
+            if (addParentBO.deletePerent(parentID)) {
                 new Alert(Alert.AlertType.INFORMATION, "Parent deleted...!").show();
                 loadAllParent();
                 loadNextParentID();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, "Parent not deleted...!").show();
             throw new RuntimeException(e);
         }
@@ -203,13 +209,13 @@ public class AddParentPageControler implements Initializable {
         }
     }
 
-    public void loadNextParentID() throws SQLException {
-        String nextParantID = addParentCModel.getID();
+    public void loadNextParentID() throws SQLException, ClassNotFoundException {
+        String nextParantID = addParentBO.getPerentID();
         LBParentId.setText(nextParantID);
     }
 
-    private void loadAllParent() throws SQLException {
-        ArrayList<AddParent> addParentDTOS = addParentCModel.getAll();
+    private void loadAllParent() throws SQLException, ClassNotFoundException {
+        ArrayList<AddParent> addParentDTOS = addParentBO.getAllParent();
 
         ObservableList<AddParentTM> addParentTMS = FXCollections.observableArrayList();
         for (AddParent addParentDTO : addParentDTOS) {

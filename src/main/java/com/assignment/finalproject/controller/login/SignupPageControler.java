@@ -44,7 +44,7 @@ public class SignupPageControler {
 
     SignInBO signinbo = (SignInBO) BOFactory.getInstance().getBO(BOFactory.BOType.SIGNIN);
 
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, ClassNotFoundException {
         TXTUsername.setOnAction(event -> TXTPassword.requestFocus());
         TXTPassword.setOnAction(event -> TXTRePassword.requestFocus());
         TXTRePassword.setOnAction(event -> BUTCreate.fire());
@@ -83,7 +83,7 @@ public class SignupPageControler {
         ANKSignin.getChildren().add(load);
     }
 
-    public void loadNextCustomerId() throws SQLException {
+    public void loadNextCustomerId() throws SQLException, ClassNotFoundException {
        String nextCustomerId = signinbo.getID();
        LBUserid.setText(nextCustomerId);
     }

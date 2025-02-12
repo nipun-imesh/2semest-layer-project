@@ -4,6 +4,7 @@ import com.assignment.finalproject.bo.custom.SendMailBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SendMailDAOImpl;
+import com.assignment.finalproject.dao.custom.SendMailDAO;
 import com.assignment.finalproject.dto.sub.GetParentIdDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class SendMailBOImpl implements SendMailBO {
 
-    SendMailDAOImpl sendMailDAO = (SendMailDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SENDMAIL);
+    SendMailDAO sendMailDAO = (SendMailDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SENDMAIL);
 
     @Override
     public ObservableList<GetParentIdDTO> getAllParentID() throws SQLException {

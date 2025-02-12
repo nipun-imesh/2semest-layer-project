@@ -7,6 +7,7 @@ import com.assignment.finalproject.dto.sub.*;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
 import com.assignment.finalproject.entity.main.AddExamList;
 import com.assignment.finalproject.entity.main.AddMark;
+import com.assignment.finalproject.entity.main.StudentManage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 
 public class AddMarkDAOImpl implements AddMarkDAO {
 
-    public ArrayList<GetStudentNameIdTM> getStudentNameId(AddMark mark) throws SQLException {
+    @Override
+    public ArrayList<StudentManage> getStudentNameId(AddMark mark) throws SQLException {
         System.out.println(mark.getClassId() + " " + mark.getGrade());
         ResultSet rst = CrudUtil.execute(
                 "SELECT * FROM student WHERE   class = ? AND s_grade = ? AND status = 'Active'",
@@ -22,16 +24,16 @@ public class AddMarkDAOImpl implements AddMarkDAO {
                 mark.getClassId(),
                 mark.getGrade()
         );
-        ArrayList<GetStudentNameIdTM> getStudentNameIdTMS = new ArrayList<>();
+        ArrayList<StudentManage> studentManages = new ArrayList<>();
 
         while (rst.next()) {
-            GetStudentNameIdTM getStudentNameIdTM = new GetStudentNameIdTM(
+            StudentManage getStudentNameId = new StudentManage(
                     rst.getString(1),
                     rst.getString(2)
             );
-            getStudentNameIdTMS.add(getStudentNameIdTM);
+            studentManages.add(getStudentNameId);
         }
-        return getStudentNameIdTMS;
+        return studentManages;
     }
 
     public ArrayList<ExamNameDTO> getExamList(String grade) throws SQLException {
@@ -51,10 +53,6 @@ public class AddMarkDAOImpl implements AddMarkDAO {
     }
 
     @Override
-    public ArrayList<GetStudentNameIdTM> getStudentNameId(AddMarkDTO markDTO) throws SQLException {
-        return null;
-    }
-
     public String fineExamId(String examName) throws SQLException {
         ResultSet resultSet = CrudUtil.execute("SELECT ex_id FROM exam WHERE e_name = ?", examName);
 

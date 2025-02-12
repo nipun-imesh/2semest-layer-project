@@ -6,4 +6,5 @@ import com.assignment.finalproject.entity.sub.Classes;
 
 public interface ClassDAO extends CrudDAO<Classes> {
 
+    ClassDTO findByclass(String selectedClassId);
 }

@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public interface ExamShedulBO extends SuperBO {
 
-     String getShedulID() throws SQLException;
-     boolean upDateShedul(AddExamListDTO addExamListDTO) throws SQLException;
-     boolean saveShedul(ExamScheduleDTO examSchedule) throws SQLException;
+     String getShedulID() throws SQLException, ClassNotFoundException;
+     boolean upDateShedul(AddExamListDTO addExamListDTO) throws SQLException, ClassNotFoundException;
+     boolean saveShedul(ExamScheduleDTO examSchedule) throws SQLException, ClassNotFoundException;
      ArrayList<ExamScheduleDTO> getAllShedul() throws SQLException;
      ArrayList<ExamScheduleDTO> search() ;
-     boolean deleteShedul(String examShedulID) throws SQLException ;
+     boolean deleteShedul(String examShedulID) throws SQLException, ClassNotFoundException;
 }

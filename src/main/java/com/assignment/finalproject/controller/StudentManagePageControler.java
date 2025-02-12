@@ -107,8 +107,8 @@ public class StudentManagePageControler implements Initializable {
     @FXML
     private Label TXTStuParentName;
 
-     ClassDAOImpl classModel = new ClassDAOImpl();
-     StudentManageDAOImpl studentManageModel = new StudentManageDAOImpl();
+//     ClassDAOImpl classModel = new ClassDAOImpl();
+//     StudentManageDAOImpl studentManageModel = new StudentManageDAOImpl();
 
      ClassBO classBO = (ClassBO) BOFactory.getInstance().getBO(BOFactory.BOType.CLASS);
      StudendManageBO studendManageBO = (StudendManageBO) BOFactory.getInstance().getBO(BOFactory.BOType.STUDENTMANAGE);
@@ -128,6 +128,8 @@ public class StudentManagePageControler implements Initializable {
             loadAllStudent();
             loadClass();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         btnDelete.setDisable(true);
@@ -406,25 +408,25 @@ public class StudentManagePageControler implements Initializable {
     @FXML
     void selectClassOnaction(ActionEvent event) throws SQLException {
         String selectedClassId = COMClass.getSelectionModel().getSelectedItem();
-        ClassDTO classDTO = classModel.findByclass(selectedClassId);
+        ClassDTO classDTO = classBO.findByclass(selectedClassId);
 
         if (classDTO != null) {
             TXTGrade.setText(classDTO.getClassId());
         }
     }
 
-    private void loadClass() throws SQLException {
+    private void loadClass() throws SQLException, ClassNotFoundException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        ArrayList<Classes> classDTOS =  classModel.getAll();
+        ArrayList<ClassDTO> classDTOS =  classBO.getAll();
 
-        for (Classes classDTO : classDTOS) {
+        for (ClassDTO classDTO : classDTOS) {
             observableList.add(classDTO.getClassId());
         }
         COMClass.setItems(observableList);
     }
 
     private void loadAllStudent() throws SQLException {
-        ArrayList<StudentManage> studentManageDTOS = studentManageModel.getAll();
+        ArrayList<StudentManage> studentManageDTOS = studendManageBO.geStudentAll();
 
         ObservableList<StudentTM> studentTMS = FXCollections.observableArrayList();
         for (StudentManage studentManageDTO : studentManageDTOS) {
@@ -444,7 +446,7 @@ public class StudentManagePageControler implements Initializable {
     }
 
     public void loadNextStudentID() throws SQLException {
-        String nextStudentId = studentManageModel.getID();
+        String nextStudentId = studendManageBO.getID();
         LBStudentId.setText(nextStudentId);
     }
 

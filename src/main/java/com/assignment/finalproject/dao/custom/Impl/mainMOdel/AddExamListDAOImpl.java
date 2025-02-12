@@ -3,6 +3,8 @@ package com.assignment.finalproject.dao.custom.Impl.mainMOdel;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.AddExamListDAO;
+import com.assignment.finalproject.dao.custom.ExamShedulDAO;
+import com.assignment.finalproject.dao.custom.ExamSubjectDAO;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.sub.ExamDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
@@ -19,8 +21,9 @@ import java.util.UUID;
 
 public class AddExamListDAOImpl implements AddExamListDAO {
 
-    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
-    ExamSubjectDAOImpl examSubjectModel = (ExamSubjectDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+//    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
+    ExamSubjectDAO examSubjectModel = (ExamSubjectDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+    ExamShedulDAO examShedulModel = (ExamShedulDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
 
     public String getExamShedulID() {
         String uniqueID = UUID.randomUUID().toString().substring(0, 7);
@@ -80,6 +83,8 @@ public class AddExamListDAOImpl implements AddExamListDAO {
             e.printStackTrace();
             return false;
 
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             connection.setAutoCommit(true);
         }

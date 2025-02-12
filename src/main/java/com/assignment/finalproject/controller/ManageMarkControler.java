@@ -111,7 +111,7 @@ public class ManageMarkControler implements Initializable {
         COMSelectGarde.setDisable(true);
         try {
             loadGrade();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -138,6 +138,8 @@ public class ManageMarkControler implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Mark not deleted").show();
             }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -243,7 +245,7 @@ public class ManageMarkControler implements Initializable {
         comboBox.setItems(FXCollections.observableArrayList(ClassLevel.getAllLabels()));
     }
 
-    private void loadGrade() throws SQLException {
+    private void loadGrade() throws SQLException, ClassNotFoundException {
         ObservableList<String> observableList = FXCollections.observableArrayList();
         ArrayList<ClassDTO> classDTOS =  classBO.getAll();
 

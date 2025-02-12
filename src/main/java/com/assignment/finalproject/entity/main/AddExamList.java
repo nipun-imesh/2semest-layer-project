@@ -54,4 +54,10 @@ public class AddExamList {
         this.subjectID = subjectId;
         this.classID = studentId;
     }
+
+    public AddExamList(String examName, String grade, String examID) {
+        this.examName = examName;
+        this.grade = grade;
+        this.examID = examID;
+    }
 }

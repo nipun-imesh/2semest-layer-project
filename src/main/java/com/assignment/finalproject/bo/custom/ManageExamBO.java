@@ -19,5 +19,5 @@ public interface ManageExamBO extends SuperBO {
      boolean saveExam(AddExamListDTO dto) throws SQLException;
      ArrayList<AddExamListDTO> getAllExam() throws SQLException;
      ArrayList<AddExamList> searchExam();
-     String getExamID() throws SQLException;
+     String getExamID() throws SQLException, ClassNotFoundException;
 }

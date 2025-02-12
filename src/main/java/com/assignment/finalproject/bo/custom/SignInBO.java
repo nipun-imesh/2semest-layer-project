@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface SignInBO extends SuperBO {
-     String getID() throws SQLException;
+     String getID() throws SQLException, ClassNotFoundException;
      boolean upDate(SigninDTO dto) throws SQLException, ClassNotFoundException;
      boolean delete(String id) throws SQLException, ClassNotFoundException;
-     boolean save(SigninDTO signinDto) throws SQLException;
+     boolean save(SigninDTO signinDto) throws SQLException, ClassNotFoundException;
      ArrayList<Signin> getAll() throws SQLException, ClassNotFoundException;
      ArrayList<Signin> search() throws SQLException, ClassNotFoundException;
 }

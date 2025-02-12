@@ -1,5 +1,7 @@
 package com.assignment.finalproject.controller;
 
+import com.assignment.finalproject.bo.BOFactory;
+import com.assignment.finalproject.bo.custom.AddParentBO;
 import com.assignment.finalproject.dto.main.AddParentDTO;
 import com.assignment.finalproject.dto.tm.AddParentTM;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddParentDAOImpl;
@@ -22,8 +24,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddParentToStudentPageControler implements Initializable {
-
-    AddParentDAOImpl addParentCModel = new AddParentDAOImpl();
 
     private StudentManagePageControler studentMC;
 
@@ -69,6 +69,10 @@ public class AddParentToStudentPageControler implements Initializable {
     @FXML
     private VBox Vbox1;
 
+//    AddParentDAOImpl addParentCModel = new AddParentDAOImpl();
+
+    AddParentBO addParentBO = (AddParentBO) BOFactory.getInstance().getBO(BOFactory.BOType.ADDPARENT);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         COLParentId.setCellValueFactory(new PropertyValueFactory<>("parentId"));
@@ -86,8 +90,10 @@ public class AddParentToStudentPageControler implements Initializable {
     private void loadAllParent() {
         ArrayList<AddParent> addParentDTOS = null;
         try {
-            addParentDTOS = addParentCModel.getAll();
+            addParentDTOS = addParentBO.getAllParent();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -152,11 +158,11 @@ public class AddParentToStudentPageControler implements Initializable {
                     "Active"
             );
             try {
-                if (addParentCModel.save(addParentDTO)) {
+                if (addParentBO.saveParent(new AddParentDTO(addParentDTO.getParentId(),addParentDTO.getParentName(),addParentDTO.getParentEmail()))) {
                     loadAllParent();
                     loadNextParentID();
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 throw new RuntimeException(e);
@@ -181,8 +187,8 @@ public class AddParentToStudentPageControler implements Initializable {
     public void loadNextParentID() {
         String nextParantID = null;
         try {
-            nextParantID = addParentCModel.getID();
-        } catch (SQLException e) {
+            nextParantID = addParentBO.getPerentID();
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         LBPerentID.setText(nextParantID);

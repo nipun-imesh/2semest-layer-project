@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public interface ExamSubjectBO extends SuperBO {
 
-    boolean saveExamSubject(ExamSubjectIdDTO subjectIdDTO) throws SQLException;
+    boolean saveExamSubject(ExamSubjectIdDTO subjectIdDTO) throws SQLException, ClassNotFoundException;
     boolean upDateExamSubject(ExamScheduleDTO examScheduleDTO) throws SQLException, ClassNotFoundException;
-    boolean deleteExamSubect(String examID) throws SQLException;
+    boolean deleteExamSubect(String examID) throws SQLException, ClassNotFoundException;
     ArrayList<ExamSubject> getAllExamSubject() throws SQLException, ClassNotFoundException;
     ArrayList<ExamSubject> searchExamSubject() throws SQLException, ClassNotFoundException;
-    String getExamSublectID() throws SQLException;
+    String getExamSublectID() throws SQLException, ClassNotFoundException;
 
 }

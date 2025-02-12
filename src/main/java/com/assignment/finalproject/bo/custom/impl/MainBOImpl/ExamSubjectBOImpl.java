@@ -2,6 +2,7 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 
 import com.assignment.finalproject.bo.custom.ExamSubjectBO;
 import com.assignment.finalproject.dao.DAOFactory;
+import com.assignment.finalproject.dao.custom.ExamSubjectDAO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamSubjectDAOImpl;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 
 public class ExamSubjectBOImpl implements ExamSubjectBO {
 
-    ExamSubjectDAOImpl examSubjectDAO = (ExamSubjectDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+    ExamSubjectDAO examSubjectDAO = (ExamSubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
 
     @Override
-    public boolean saveExamSubject(ExamSubjectIdDTO subjectIdDTO) throws SQLException {
+    public boolean saveExamSubject(ExamSubjectIdDTO subjectIdDTO) throws SQLException, ClassNotFoundException {
         return examSubjectDAO.save(new ExamSubject(subjectIdDTO.getExamId(),subjectIdDTO.getSubjectId()));
     }
 
@@ -26,7 +27,7 @@ public class ExamSubjectBOImpl implements ExamSubjectBO {
 
 
     @Override
-    public boolean deleteExamSubect(String examID) throws SQLException {
+    public boolean deleteExamSubect(String examID) throws SQLException, ClassNotFoundException {
         return examSubjectDAO.delete(examID);
     }
 
@@ -41,7 +42,7 @@ public class ExamSubjectBOImpl implements ExamSubjectBO {
     }
 
     @Override
-    public String getExamSublectID() throws SQLException {
+    public String getExamSublectID() throws SQLException, ClassNotFoundException {
         return examSubjectDAO.getID();
     }
 }

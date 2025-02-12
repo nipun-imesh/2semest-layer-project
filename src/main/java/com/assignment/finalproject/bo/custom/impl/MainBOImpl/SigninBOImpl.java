@@ -3,6 +3,7 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 import com.assignment.finalproject.bo.custom.SignInBO;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.SigninDAOImpl;
+import com.assignment.finalproject.dao.custom.SignInDAO;
 import com.assignment.finalproject.dto.main.SigninDTO;
 import com.assignment.finalproject.entity.main.Signin;
 
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 
 public class SigninBOImpl implements SignInBO {
 
-    SigninDAOImpl signinDAO = (SigninDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SIGNIN);
+    SignInDAO signinDAO = (SignInDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.SIGNIN);
 
-    public String getID() throws SQLException {
+    public String getID() throws SQLException, ClassNotFoundException {
         return signinDAO.getID();
     }
 
@@ -29,7 +30,7 @@ public class SigninBOImpl implements SignInBO {
     }
 
     @Override
-    public boolean save(SigninDTO signinDto) throws SQLException {
+    public boolean save(SigninDTO signinDto) throws SQLException, ClassNotFoundException {
 
         return signinDAO.save(new Signin(signinDto.getUserid(),signinDto.getUsername(),signinDto.getPassword()));
     }

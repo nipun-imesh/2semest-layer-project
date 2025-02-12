@@ -2,6 +2,9 @@ package com.assignment.finalproject.dao.custom.Impl.mainMOdel;
 
 import com.assignment.finalproject.dao.CrudUtil;
 //import com.assignment.finalproject.dao.custom.ManageExamDAO;
+import com.assignment.finalproject.dao.DAOFactory;
+import com.assignment.finalproject.dao.custom.ExamShedulDAO;
+import com.assignment.finalproject.dao.custom.ExamSubjectDAO;
 import com.assignment.finalproject.dao.custom.ManageExamDAO;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.main.AddExamListDTO;
@@ -16,8 +19,11 @@ import java.util.ArrayList;
 
 public class ManageExamDAOImpl implements ManageExamDAO {
 
-    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
-    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
+//    ExamShedulDAOImpl examShedulModel = new ExamShedulDAOImpl();
+//    ExamSubjectDAOImpl examSubjectModel = new ExamSubjectDAOImpl();
+
+    ExamSubjectDAO examSubjectModel = (ExamSubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+    ExamShedulDAO examShedulModel = (ExamShedulDAO)DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
 
     @Override
     public boolean upDate(AddExamList addExamList) throws SQLException {
@@ -108,7 +114,7 @@ public class ManageExamDAOImpl implements ManageExamDAO {
             connection.commit();
             return true;
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             connection.rollback();
             return false;

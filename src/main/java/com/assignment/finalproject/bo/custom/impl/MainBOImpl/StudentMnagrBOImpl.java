@@ -3,6 +3,7 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 import com.assignment.finalproject.bo.custom.StudendManageBO;
 import com.assignment.finalproject.dao.DAOFactory;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.StudentManageDAOImpl;
+import com.assignment.finalproject.dao.custom.StudentManageDAO;
 import com.assignment.finalproject.dto.main.StudentManageDTO;
 import com.assignment.finalproject.entity.main.StudentManage;
 
@@ -11,10 +12,13 @@ import java.util.ArrayList;
 
 public class StudentMnagrBOImpl implements StudendManageBO {
 
-    StudentManageDAOImpl studentManageDAO = (StudentManageDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENTMANAGE);
-    StudentManage studentManage = new StudentManage();
+    StudentManageDAO studentManageDAO = (StudentManageDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.STUDENTMANAGE);
+//    StudentManage studentManage = new StudentManage();
 
     public  boolean save(StudentManageDTO studto) {
+
+        System.out.println("hhhhhhhh");
+
         return studentManageDAO.save(new StudentManage( studto.getStudentId(),
                                                         studto.getStudentName(),
                                                         studto.getAge(),

@@ -3,12 +3,18 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 import com.assignment.finalproject.bo.custom.AddExamListBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
+import com.assignment.finalproject.dao.custom.AddExamListDAO;
+import com.assignment.finalproject.dao.custom.ExamShedulDAO;
+import com.assignment.finalproject.dao.custom.ExamSubjectDAO;
+import com.assignment.finalproject.dao.custom.Impl.mainMOdel.ExamShedulDAOImpl;
 import com.assignment.finalproject.db.DBConnection;
 import com.assignment.finalproject.dto.sub.ExamDTO;
 import com.assignment.finalproject.dto.sub.ExamScheduleDTO;
 import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
 import com.assignment.finalproject.entity.sub.Exam;
+import com.assignment.finalproject.entity.sub.ExamSchedule;
+import com.assignment.finalproject.entity.sub.ExamSubject;
 
 
 import java.sql.Connection;
@@ -17,19 +23,19 @@ import java.util.ArrayList;
 
 public class AddExamListBOImpl implements AddExamListBO {
 
-    AddExamListDAOImpl addExamListDAO = (AddExamListDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ADDEXAMLIST);
+    AddExamListDAO addExamListDAO = (AddExamListDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ADDEXAMLIST);
 
-    ExamShedulBOImpl examShedulDAO = (ExamShedulBOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
-    ExamSubjectBOImpl examSubjectDAO = (ExamSubjectBOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
+    ExamShedulDAO examShedulDAO = (ExamShedulDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSCHEDULE);
+    ExamSubjectDAO examSubjectDAO = (ExamSubjectDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.EXAMSUBJECT);
 
-    public String getExamShedulID() {
-        return addExamListDAO.getExamShedulID();
+    public String getExamShedulID() throws SQLException, ClassNotFoundException {
+        return addExamListDAO.getID();
     }
 
     public boolean saveExamList(
             ArrayList<ExamDTO> examDTOList,
             ArrayList<ExamScheduleDTO> examScheduleDTOList,
-            ArrayList<ExamSubjectIdDTO> examSubjectIdDTOList) throws SQLException {
+            ArrayList<ExamSubjectIdDTO> examSubjectIdDTOList) throws SQLException, ClassNotFoundException {
 
         Connection connection = DBConnection.getInstance().getConnection();
         connection.setAutoCommit(false); // Begin transaction
@@ -50,7 +56,7 @@ public class AddExamListBOImpl implements AddExamListBO {
             }
 
             for (ExamScheduleDTO scheduleDTO : examScheduleDTOList) {
-                boolean isScheduleSaved = examShedulDAO.saveShedul(scheduleDTO);
+                boolean isScheduleSaved = examShedulDAO.save(new ExamSchedule(scheduleDTO.getExamScheduleId(), scheduleDTO.getExamId(), scheduleDTO.getHallId(), scheduleDTO.getExamTime(), scheduleDTO.getExamDate()));
                 if (!isScheduleSaved) {
                     connection.rollback();
                     return false;
@@ -58,7 +64,7 @@ public class AddExamListBOImpl implements AddExamListBO {
             }
 
             for (ExamSubjectIdDTO subjectIdDTO : examSubjectIdDTOList) {
-                boolean isSubjectSaved = examSubjectDAO.saveExamSubject(subjectIdDTO);
+                boolean isSubjectSaved = examSubjectDAO.save(new ExamSubject(subjectIdDTO.getSubjectId(), subjectIdDTO.getExamId(), subjectIdDTO.getStudentId()));
                 if (!isSubjectSaved) {
                     connection.rollback();
                     return false;

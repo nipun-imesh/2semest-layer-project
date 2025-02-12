@@ -3,6 +3,7 @@ package com.assignment.finalproject.bo.custom.impl.MainBOImpl;
 import com.assignment.finalproject.bo.custom.AddMarkBO;
 import com.assignment.finalproject.dao.CrudUtil;
 import com.assignment.finalproject.dao.DAOFactory;
+import com.assignment.finalproject.dao.custom.AddMarkDAO;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddExamListDAOImpl;
 import com.assignment.finalproject.dao.custom.Impl.mainMOdel.AddMarkDAOImpl;
 import com.assignment.finalproject.dto.main.AddMarkDTO;
@@ -11,6 +12,7 @@ import com.assignment.finalproject.dto.sub.ExamSubjectIdDTO;
 import com.assignment.finalproject.dto.sub.PlaysStudentAllMarkDTO;
 import com.assignment.finalproject.dto.tm.GetStudentNameIdTM;
 import com.assignment.finalproject.entity.main.AddMark;
+import com.assignment.finalproject.entity.main.StudentManage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,10 +20,20 @@ import java.util.ArrayList;
 
 public class AddMarkBOImpl implements AddMarkBO {
 
-    AddMarkDAOImpl addMarkDAO = (AddMarkDAOImpl) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ADDMARK);
+    AddMarkDAO addMarkDAO = (AddMarkDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ADDMARK);
 
     public ArrayList<GetStudentNameIdTM> getStudentNameId(AddMarkDTO markDTO) throws SQLException {
-       return addMarkDAO.getStudentNameId(markDTO);
+
+        ArrayList<GetStudentNameIdTM> getStudentNameIdTMS = new ArrayList<>();
+
+        ArrayList<StudentManage> studentManages = addMarkDAO.getStudentNameId(new AddMark(markDTO.getClassId(), markDTO.getGrade()));
+
+        for (StudentManage studentManage : studentManages) {
+            getStudentNameIdTMS.add(new GetStudentNameIdTM(studentManage.getStudentId(), studentManage.getStudentName()));
+        }
+
+        // Return the complete list (AFTER the loop)
+        return getStudentNameIdTMS;
     }
 
     public ArrayList<ExamNameDTO> getExamList(String classNumber) throws SQLException {
@@ -46,7 +58,7 @@ public class AddMarkBOImpl implements AddMarkBO {
     }
 
     @Override
-    public ArrayList<AddMarkDTO> getAll() throws SQLException {
+    public ArrayList<AddMarkDTO> getAll() throws SQLException, ClassNotFoundException {
         ArrayList<AddMark> addMarks = addMarkDAO.getAll();
         ArrayList<AddMarkDTO> addMarkDTOS = new ArrayList<>();
         for (AddMark addMark : addMarks) {
